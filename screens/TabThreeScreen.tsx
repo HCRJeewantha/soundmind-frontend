@@ -142,11 +142,11 @@ export default function TabThreeScreen({ navigation }: any) {
 
     const renderItem = ({ item, index }: any) => (
 
-        <View style={{ flex: 1, flexDirection: 'row', borderRadius: 2, width: '100%', backgroundColor:'#e390f940' }}>
+        <View style={{ flex: 1, flexDirection: 'row', borderRadius: 2, width: '100%', backgroundColor: '#e390f940' }}>
             <View style={{ width: '10%', height: '80px', padding: 5 }} >
                 <Text style={styles.number}>{index + 1}</Text>
             </View>
-         
+
             <View style={{ width: '30%', height: '80px', margin: 5 }} >
                 <Image
                     style={{
@@ -170,7 +170,7 @@ export default function TabThreeScreen({ navigation }: any) {
                     <FontAwesome
                         name="ellipsis-h"
                         size={25}
-                        style={{ margin: '5px', padding: '5px', color:'#fff' }}
+                        style={{ margin: '5px', padding: '5px', color: '#fff' }}
                     />
                 </Pressable>
             </View>
@@ -179,9 +179,11 @@ export default function TabThreeScreen({ navigation }: any) {
 
 
     return (
-        <Fragment>
-             <View style={{ position: 'absolute', top: 130, left: 10, right: 0, bottom: 0, zIndex:10 }}>
-                <Text style={{color:'#fff', fontSize:35, fontWeight:'600'}}>Good Afternoon</Text>
+
+        <SafeAreaView style={styles.container} >
+
+            <View style={{ position: 'absolute', top: 130, left: 10, zIndex: 10 }}>
+                <Text style={{ color: '#fff', fontSize: 35, fontWeight: '600' }}>Good Afternoon</Text>
             </View>
             <View>
                 <Image
@@ -193,48 +195,47 @@ export default function TabThreeScreen({ navigation }: any) {
                     }}
                     source={SUNSET} />
             </View>
-            <SafeAreaView style={styles.container} >
-                <FlatList
-                    style={{ width: '100%' }}
-                    data={searchData}
-                    renderItem={renderItem}
-                    keyExtractor={item => item}
-                />
-                <View style={styles.modelContainer}>
-                    <ModelView img={selectedSongImg} name={selectedSongName} />
-                </View>
-                <TouchableOpacity
-                    style={{
-                        borderWidth: 1,
-                        borderColor: '#2196f3',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 70,
-                        position: 'absolute',
-                        bottom: 10,
-                        right: 10,
-                        height: 70,
-                        backgroundColor: '#2196f3',
-                        borderRadius: 100,
-                        shadowOpacity: 0.25,
-                        shadowRadius: 30,
-                        shadowOffset: {
-                            height: 0,
-                            width: 0,
-                        },
 
-                    }}
-                    onPress={() => playPlaylist()}
-                >
-                    <FontAwesome
-                        color='#fff'
-                        name="play"
-                        size={25}
-                        style={{ marginLeft: '5px' }}
-                    />
-                </TouchableOpacity>
-            </SafeAreaView>
-        </Fragment>
+            <FlatList
+                style={{ width: '100%' }}
+                data={searchData}
+                renderItem={renderItem}
+                keyExtractor={item => item}
+            />
+            <View style={styles.modelContainer}>
+                <ModelView img={selectedSongImg} name={selectedSongName} />
+            </View>
+            <TouchableOpacity
+                style={{
+                    borderWidth: 1,
+                    borderColor: '#2196f3',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 70,
+                    position: 'absolute',
+                    bottom: 10,
+                    right: 10,
+                    height: 70,
+                    backgroundColor: '#2196f3',
+                    borderRadius: 100,
+                    shadowOpacity: 0.25,
+                    shadowRadius: 30,
+                    shadowOffset: {
+                        height: 0,
+                        width: 0,
+                    },
+
+                }}
+                onPress={() => playPlaylist()}
+            >
+                <FontAwesome
+                    color='#fff'
+                    name="play"
+                    size={25}
+                    style={{ marginLeft: '5px' }}
+                />
+            </TouchableOpacity>
+        </SafeAreaView>
     );
 }
 
@@ -274,7 +275,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         top: '40%',
         position: 'absolute',
-        marginLeft:10
+        marginLeft: 10
     },
     subtitle: {
         fontSize: 13,
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 10,
         padding: 10,
-        marginRight:10,
+        marginRight: 10,
         elevation: 2,
     },
     buttonOpen: {

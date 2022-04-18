@@ -131,7 +131,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   };
 
   const gfg_Run = () => {
-    timer = setInterval(snap, 3000);
+    timer = setInterval(snap, 5000);
   }
 
   const gfg_Stop = () => {
