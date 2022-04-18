@@ -13,10 +13,12 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [videoState, setVideoState] = useState(false);
-  const [searchData, onSearchRequest] = useState([]);
+  const [playlist, onPlaylisthRequest] = useState([]);
   const [currentVideoId, setCurrentVideoId] = useState('');
   const [currentVideoNumber, setCurrentVideoNumber] = useState(0);
   const [currentEmotionImage, setCurrentEmotionImage] = useState(HAPPY);
+  const [currentEmotionText, setCurrentEmotionText] = useState('Happy');
+
   const [currentEmotion, setCurrentEmotion] = useState(0);
   const [playerState, setPlayerState] = useState();
 
@@ -24,56 +26,64 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   let timer: any;
 
   ws.onmessage = function socketConnection(event) {
-    console.log(JSON.parse(event.data).dominant_emotion)
+
     switch (JSON.parse(event.data).dominant_emotion) {
-      case "angry": {
+      case "angry":
         setCurrentEmotionImage(ANGRY)
+        setCurrentEmotionText('Angry')
         setCurrentEmotion(currentEmotion - 1)
         break;
-      }
-      case "fear": {
+
+      case "fear":
         setCurrentEmotionImage(FEAR)
+        setCurrentEmotionText('Fear')
         setCurrentEmotion(currentEmotion - 1)
         break;
-      }
-      case "neutral": {
+
+      case "neutral":
         setCurrentEmotionImage(NEUTRAL)
+        setCurrentEmotionText('Neutral')
         setCurrentEmotion(currentEmotion + 1)
         break;
-      }
-      case "sad": {
+
+      case "sad":
         setCurrentEmotionImage(SAD)
+        setCurrentEmotionText('Sad')
         setCurrentEmotion(currentEmotion - 1)
         break;
-      }
-      case "disgust": {
+
+      case "disgust":
         setCurrentEmotionImage(SAD)
+        setCurrentEmotionText('Disgust')
         setCurrentEmotion(currentEmotion - 1)
         break;
-      }
-      case "happy": {
+
+      case "happy":
         setCurrentEmotionImage(HAPPY)
+        setCurrentEmotionText('Happy')
         setCurrentEmotion(currentEmotion + 1)
         break;
-      }
-      case "surprise": {
+
+      case "surprise":
         setCurrentEmotionImage(SAD)
+        setCurrentEmotionText('Suprise')
         setCurrentEmotion(currentEmotion + 1)
         break;
-      }
-      default: {
+
+      default:
         setCurrentEmotionImage(NEUTRAL)
+        setCurrentEmotionText('Neutral')
         // setCurrentEmotion(currentEmotion + 1)
         break;
-      }
+
     }
   }
 
-  const predictEmotionWhitePlayingSong = async (event: any) => {
-    if (event.data == 3) {
+  const predictEmotionWhilePlayingSong = async (event: any) => {
+    if (event.data == 3) { //video started
       setCurrentEmotion(0)
     }
-    if (event.data == 0) {
+    if (event.data == 0) { //video ended
       if (currentEmotion <= 0) {
         setNextSong(false)
       }
@@ -166,9 +176,8 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     axios.get(
       baseUrl + '/get-playlist'
     ).then((response) => {
-      onSearchRequest(response.data)
+      onPlaylisthRequest(response.data)
       setCurrentVideoId(response.data[0].song_id)
-      sessionStorage.setItem('lastPlayedSongId', response.data[0].song_id)
     }).catch((error) => {
       console.log(error)
     });
@@ -176,10 +185,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   const setNextSong = async (state: boolean) => {
     if (state) {
-      if (currentVideoNumber <= searchData.length) {
-        setCurrentVideoId(searchData[currentVideoNumber].song_id)
-        sessionStorage.setItem('lastPlayedSongId', searchData[currentVideoNumber].song_id)
+      if (currentVideoNumber <= playlist.length) {
         var nextNumber = currentVideoNumber + 1
+        setCurrentVideoId(playlist[nextNumber].song_id)
         setCurrentVideoNumber(nextNumber)
       }
     } else {
@@ -188,10 +196,12 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   }
 
   useEffect(() => {
+    //Turn on camara
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
     })();
-    sessionStorage.setItem('lastPlayedSongId', "")
+
+    //get playlist
     getPlaylist()
   }, []);
 
@@ -202,16 +212,18 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   return (
     <View style={styles.container}>
+
+      {/* Youtube Player */}
       <YouTube
         videoId={currentVideoId}
         opts={opts}
         onStateChange={(e) => {
-          predictEmotionWhitePlayingSong(e)
-          if (e.data == 2) {
+          predictEmotionWhilePlayingSong(e)
+          if (e.data == 2) {// pause video state
             setVideoState(false)
-          } else if (e.data == 1) {
+          } else if (e.data == 1) { //start video state
             setVideoState(true)
-          } else if (e.data == 0) {
+          } else if (e.data == 0) { //end video state
             setVideoState(false)
           }
         }}
@@ -219,15 +231,25 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           setPlayerState(event.target)
         }} />
 
-      <View style={{backgroundColor:'#fff'}}>
-     
+
+      {/* Emotion state */}
+      <View style={{ backgroundColor: '#fff' }}>
         {currentEmotion}
       </View>
-      <View style={{alignItems:'center',alignContent:'center', marginVertical:20}}>
+
+      {/* Emotion Text */}
+      <View style={{ backgroundColor: '#fff' }}>
+        {currentEmotionText}
+      </View>
+
+
+      {/* emoji face */}
+      <View style={{ alignItems: 'center', alignContent: 'center', marginVertical: 20 }}>
         <ModelView img={currentEmotionImage} />
       </View>
 
-      <View style={{alignItems:'center',alignContent:'center'}}>
+      {/* Play pause button */}
+      <View style={{ alignItems: 'center', alignContent: 'center' }}>
         <Pressable
           style={{
             height: 80, width: 80, borderRadius: 100, backgroundColor: '#2196f3', shadowOpacity: 0.25,
