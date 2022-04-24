@@ -5,6 +5,7 @@ import axios from 'axios'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SUNSET } from "./background_imgs";
+import { LinearGradient } from "expo-linear-gradient";
 
 const baseUrl = 'http://127.0.0.1:8000';
 
@@ -94,7 +95,43 @@ export default function TabThreeScreen({ navigation }: any) {
                                 <View style={{ marginBottom: 20 }}>
                                     <Text style={{ fontSize: 17 }}>Playlist | My Playlist</Text>
                                 </View>
-                                <View style={{ marginBottom: 20 }}>
+
+                                <TouchableOpacity
+                                    style={{
+                                        marginVertical:20,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                    onPress={() => playPlaylist()}
+                                >
+                                    <LinearGradient
+                                        colors={['#fb00ffeb', '#26ced7f2']}
+                                        style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: 70,
+                                            height: 70,
+                                            backgroundColor: '#2196f3',
+                                            borderRadius: 100,
+                                            shadowOpacity: 0.25,
+                                            shadowRadius: 30,
+                                            shadowOffset: {
+                                                height: 0,
+                                                width: 0,
+                                            },
+                                        }}
+                                    >
+                                        <FontAwesome
+                                            color='#fff'
+                                            name="play"
+                                            size={25}
+                                            style={{ marginLeft: '5px' }}
+                                        />
+                                    </LinearGradient>
+                                </TouchableOpacity>
+
+
+                                {/* <View style={{ marginBottom: 20 }}>
                                     <Pressable
                                         style={{
                                             height: 80, width: 80, borderRadius: 100, backgroundColor: '#2196f3', shadowOpacity: 0.25,
@@ -115,7 +152,7 @@ export default function TabThreeScreen({ navigation }: any) {
                                             color={'#fff'}
                                         />
                                     </Pressable>
-                                </View>
+                                </View> */}
                             </View>
                             <View style={styles.modelActionButtons}>
                                 <Pressable
@@ -142,7 +179,7 @@ export default function TabThreeScreen({ navigation }: any) {
 
     const renderItem = ({ item, index }: any) => (
 
-        <View style={{ flex: 1, flexDirection: 'row', borderRadius: 2, width: '100%', backgroundColor: '#e390f940' }}>
+        <View style={{ flex: 1, flexDirection: 'row', borderRadius: 2, width: '100%', backgroundColor: '#b400ff33' }}>
             <View style={{ width: '10%', height: '80px', padding: 5 }} >
                 <Text style={styles.number}>{index + 1}</Text>
             </View>
@@ -153,13 +190,13 @@ export default function TabThreeScreen({ navigation }: any) {
                         width: 'auto',
                         height: '100%',
                         resizeMode: 'contain',
-                        borderRadius: 10
+                        borderRadius: 10,
 
                     }}
                     source={item.song_img} />
             </View>
             <View style={{ width: '50%', height: '80px', padding: 5 }} >
-                <Text style={styles.title}>{item.name}</Text>
+                <Text numberOfLines={2} style={styles.title}>{item.name}</Text>
                 <Text style={styles.subtitle}>My Album</Text>
             </View>
             <View style={{ width: '10%', height: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -180,62 +217,75 @@ export default function TabThreeScreen({ navigation }: any) {
 
     return (
 
-        <SafeAreaView style={styles.container} >
-
-            <View style={{ position: 'absolute', top: 130, left: 10, zIndex: 10 }}>
-                <Text style={{ color: '#fff', fontSize: 35, fontWeight: '600' }}>Good Afternoon</Text>
-            </View>
-            <View>
-                <Image
-                    style={{
-                        width: '100vw',
-                        height: '210px',
-                        resizeMode: 'contain',
-                        // borderRadius: 10
-                    }}
-                    source={SUNSET} />
-            </View>
-
-            <FlatList
-                style={{ width: '100%' }}
-                data={searchData}
-                renderItem={renderItem}
-                keyExtractor={item => item}
+        <View style={styles.mainContainer}>
+            <LinearGradient
+                colors={['#000', '#75dadf']}
+                style={styles.background}
             />
-            <View style={styles.modelContainer}>
-                <ModelView img={selectedSongImg} name={selectedSongName} />
-            </View>
-            <TouchableOpacity
-                style={{
-                    borderWidth: 1,
-                    borderColor: '#2196f3',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 70,
-                    position: 'absolute',
-                    bottom: 10,
-                    right: 10,
-                    height: 70,
-                    backgroundColor: '#2196f3',
-                    borderRadius: 100,
-                    shadowOpacity: 0.25,
-                    shadowRadius: 30,
-                    shadowOffset: {
-                        height: 0,
-                        width: 0,
-                    },
+            <SafeAreaView style={styles.container} >
 
-                }}
-                onPress={() => playPlaylist()}
-            >
-                <FontAwesome
-                    color='#fff'
-                    name="play"
-                    size={25}
-                    style={{ marginLeft: '5px' }}
+                <View style={{ position: 'absolute', top: 130, left: 10, zIndex: 10 }}>
+                    <Text style={{ color: '#fff', fontSize: 35, fontWeight: '600' }}>Good Afternoon</Text>
+                </View>
+                <View>
+                    <Image
+                        style={{
+                            width: '100vw',
+                            height: '210px',
+                            resizeMode: 'contain',
+                            // borderRadius: 10
+                        }}
+                        source={SUNSET} />
+                </View>
+
+                <FlatList
+                    style={{ width: '100%' }}
+                    data={searchData}
+                    renderItem={renderItem}
+                    keyExtractor={item => item}
                 />
-            </TouchableOpacity>
-        </SafeAreaView>
+                <View style={styles.modelContainer}>
+                    <ModelView img={selectedSongImg} name={selectedSongName} />
+                </View>
+
+                <TouchableOpacity
+                    style={{
+                        position: 'absolute',
+                        bottom: 20,
+                        right: 20
+                    }}
+                    onPress={() => playPlaylist()}
+                >
+                    <LinearGradient
+                        colors={['#fb00ffeb', '#26ced7f2']}
+                        style={{
+                            borderWidth: 1,
+                            borderColor: '#2196f3',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: 70,
+                            height: 70,
+                            backgroundColor: '#2196f3',
+                            borderRadius: 100,
+                            shadowOpacity: 0.25,
+                            shadowRadius: 30,
+                            shadowOffset: {
+                                height: 0,
+                                width: 0,
+                            },
+                        }}
+                    >
+                        <FontAwesome
+                            color='#fff'
+                            name="play"
+                            size={25}
+                            style={{ marginLeft: '5px' }}
+                        />
+                    </LinearGradient>
+                </TouchableOpacity>
+
+            </SafeAreaView>
+        </View>
     );
 }
 
@@ -246,6 +296,19 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         width: '100%'
+    },
+    mainContainer: {
+        flex: 1,
+        // display: 'flex',
+        // alignItems: 'center',
+    },
+    background: {
+        zIndex: -10,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: '50%',
+        height: '100%',
     },
     modelContainer: {
         display: 'flex',

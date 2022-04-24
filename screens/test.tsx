@@ -1,107 +1,122 @@
 import { Button, StyleSheet, View, Image, Pressable } from 'react-native';
 import { RootTabScreenProps } from '../types';
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { Camera } from 'expo-camera';
 import { FontAwesome } from '@expo/vector-icons';
 import { ANGRY, FEAR, HAPPY, NEUTRAL, SAD } from './emotion_imgs';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { AreaChart, CartesianGrid, Area, XAxis, YAxis, ResponsiveContainer, LineChart, Tooltip, Legend, Line } from 'recharts'
 
 const baseUrl = 'http://127.0.0.1:8000';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const ws = new WebSocket('ws://localhost:8000/ws')
 
-  // const [camera, setCamera] = useState(null);
-
+  const [camera, setCamera] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [hasPermission, setHasPermission] = useState(null);
   const [videoState, setVideoState] = useState(false);
   const [playlist, onPlaylisthRequest] = useState([]);
   const [currentVideoId, setCurrentVideoId] = useState('');
   const [currentVideoNumber, setCurrentVideoNumber] = useState(0);
   const [currentEmotionImage, setCurrentEmotionImage] = useState(HAPPY);
   const [currentEmotionText, setCurrentEmotionText] = useState('Happy');
-  const [testData, setTest] = useState([{ name: 0, emotion: 0 }]);
+  const [testData, setTest] = useState([{ name: 0, pv: 0 }]);
+  const [count, setCount] = useState(0);
 
   const [currentEmotion, setCurrentEmotion] = useState(0);
-  const [count, setCount] = useState(0);
+
+  const [currentEmotionTest, setCurrentEmotionTest] = useState(0);
+
+
   const [playerState, setPlayerState] = useState();
 
-  let camera: Camera;
+  // let camera: Camera;
   let timer: any;
 
-  const createDataTable = (value: any, count: number) => {
-    var tempTable = []
-    tempTable = testData
+  const createDataTable = (value: any) => {
+    // var tt = []
+    // tt = testData
 
-    tempTable.push({ name: count, emotion: value })
-    setCount(count + 1)
-    setTest(tempTable)
-
+    // tt.push({ name: count, pv: value })
+    // setCount(count + 1)
+    // setTest(tt)
+    console.log(value + " here")
   }
 
   ws.onmessage = function socketConnection(event) {
-    createDataTable(currentEmotion, count)
-    setCount(count + 1)
+
     switch (JSON.parse(event.data).dominant_emotion) {
       case "angry":
         setCurrentEmotionImage(ANGRY)
         setCurrentEmotionText('Angry')
         setCurrentEmotion(currentEmotion - 1)
+        setCurrentEmotionTest(currentEmotionTest - 1)
+
         break;
 
       case "fear":
         setCurrentEmotionImage(FEAR)
         setCurrentEmotionText('Fear')
         setCurrentEmotion(currentEmotion - 1)
+        setCurrentEmotionTest(currentEmotionTest - 1)
         break;
 
       case "neutral":
         setCurrentEmotionImage(NEUTRAL)
         setCurrentEmotionText('Neutral')
         setCurrentEmotion(currentEmotion + 1)
+        setCurrentEmotionTest(currentEmotionTest + 1)
+
         break;
 
       case "sad":
         setCurrentEmotionImage(SAD)
         setCurrentEmotionText('Sad')
         setCurrentEmotion(currentEmotion - 1)
+        setCurrentEmotionTest(currentEmotionTest - 1)
+
         break;
 
       case "disgust":
         setCurrentEmotionImage(SAD)
         setCurrentEmotionText('Disgust')
         setCurrentEmotion(currentEmotion - 1)
+        setCurrentEmotionTest(currentEmotionTest - 1)
+
         break;
 
       case "happy":
         setCurrentEmotionImage(HAPPY)
         setCurrentEmotionText('Happy')
         setCurrentEmotion(currentEmotion + 1)
+        setCurrentEmotionTest(currentEmotionTest + 1)
+
         break;
 
       case "surprise":
         setCurrentEmotionImage(SAD)
         setCurrentEmotionText('Suprise')
         setCurrentEmotion(currentEmotion + 1)
+        setCurrentEmotionTest(currentEmotionTest + 1)
+
         break;
 
       default:
         setCurrentEmotionImage(NEUTRAL)
         setCurrentEmotionText('Neutral')
-        // setCurrentEmotion(currentEmotion + 1)
+        // setCurrentEmotion(currentEmotion + 0)
         break;
 
     }
+    console.log(currentEmotionTest)
   }
 
   const predictEmotionWhilePlayingSong = async (event: any) => {
     if (event.data == 3) { //video started
       setCurrentEmotion(0)
-      setTest([{ name: 0, emotion: 0 }])
-      setCount(0)
     }
     if (event.data == 0) { //video ended
       if (currentEmotion <= 0) {
@@ -139,24 +154,23 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   const snap = async () => {
     //angry, fear, neutral, sad, disgust, happy and surprise
+    console.log("snap here")
     if (camera) {
+      console.log("snap in")
+
       let photo = await camera.takePictureAsync();
       var base64result = photo.uri.substr(photo.uri.indexOf(',') + 1);
       await ws.send(base64result)
     }
-
   };
 
   const gfg_Run = () => {
-    timer = setInterval(snap, 10000);
+    timer = setInterval(snap, 3000);
   }
-
-  gfg_Run()
 
   const gfg_Stop = () => {
     clearInterval(timer);
   }
-
 
   const ModelView = (props: any) => (
     <View>
@@ -170,49 +184,17 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     </View>
   )
 
-  const ChartView = (props: any) => (
-    <View style={{ flex: 1, flexDirection: 'row', width: '100%' }}>
-      <View style={{ width: '20%', height: '80px', padding: 5 }} >
-        {/* emoji face */}
-        <View style={{ alignItems: 'center', alignContent: 'center', marginTop: 15 }}>
-          <ModelView img={currentEmotionImage} />
-        </View>
-      </View>
-      <View style={{ width: '80%', height: '80px', margin: 5 }} >
-        <LineChart
-          width={330}
-          height={130}
-          data={props.testData}
-          margin={{
-            top: 10,
-            right: 50,
-            left: -60,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="emotion" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </LineChart>
-      </View>
-    </View>
-
-  )
-
   const playVideo = async () => {
     playerState.playVideo()
     setVideoState(true)
+    gfg_Run()
   }
 
   const pauseVideo = async () => {
     playerState.pauseVideo()
     setVideoState(false)
+    gfg_Stop()
   }
-
-
 
   const getPlaylist = async () => {
     axios.get(
@@ -239,14 +221,16 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   useEffect(() => {
     //Turn on camara
+    // Create an interval to send echo messages to the server
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
     })();
 
     //get playlist
     getPlaylist()
-  }, []);
 
+  }, []);
 
   const opts: YouTubeProps['opts'] = {
     height: '390',
@@ -258,6 +242,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
       {/* Youtube Player */}
       <YouTube
+
         videoId={currentVideoId}
         opts={opts}
         onStateChange={(e) => {
@@ -280,16 +265,48 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       />
 
       {/* Emotion state */}
-      {/* <View style={{ backgroundColor: '#fff' }}>
+      <View style={{ backgroundColor: '#fff' }}>
         {currentEmotion}
+      </View>
+
+      {/* Emotion Text */}
+      {/* <View style={{ backgroundColor: '#fff' }}>
+        {currentEmotionText}
       </View> */}
 
-      <ChartView testData={testData} />
+      {/* <ResponsiveContainer width="100%" height="20%">
+        <LineChart
+          width={500}
+          height={100}
+          data={testData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+        </LineChart>
+      </ResponsiveContainer> */}
+
+
+      {/* emoji face */}
+      <View style={{ alignItems: 'center', alignContent: 'center', marginVertical: 20 }}>
+        <ModelView img={currentEmotionImage} />
+      </View>
 
       {/* Play pause button */}
-      <View style={{ alignItems: 'center', alignContent: 'center', marginVertical: 20 }}>
+      <View style={{ alignItems: 'center', alignContent: 'center' }}>
         <Pressable
+       
           style={{
+
             borderRadius: 100,
             alignItems: 'center',
             justifyContent: 'center',
@@ -333,7 +350,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
         </Pressable>
       </View>
 
-      <Camera style={styles.camera} ref={(r: any) => { camera = r }} type={type}></Camera>
+      <Camera style={styles.camera} ref={(ref: any) => setCamera(ref)} type={type}></Camera>
     </View>
 
   );
