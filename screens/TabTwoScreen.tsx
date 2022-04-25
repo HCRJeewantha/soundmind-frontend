@@ -193,7 +193,7 @@ export default function TabTwoScreen() {
               style={{
                 backgroundColor: '#2196f3', height: 40,
                 margin: 12,
-                width: "80%",
+                width: "70%",
                 borderRadius: 5
               }}
               onPress={() => search(searchParam)}
@@ -229,7 +229,8 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     borderRadius: 5,
-    color: '#fff'
+    // color: '#fff',
+    backgroundColor:'#fff'
 
   },
   modelContainer: {

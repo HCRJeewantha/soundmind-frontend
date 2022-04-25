@@ -1,4 +1,4 @@
-import { Button, StyleSheet, View, Image, Pressable } from 'react-native';
+import { Button, StyleSheet, View, Image, Pressable, ScrollView } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios'
@@ -8,6 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ANGRY, FEAR, HAPPY, NEUTRAL, SAD } from './emotion_imgs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts';
+import Slider from '@react-native-community/slider';
 
 const baseUrl = 'http://127.0.0.1:8000';
 
@@ -15,7 +16,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const ws = new WebSocket('ws://localhost:8000/ws')
 
   // const [camera, setCamera] = useState(null);
-
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [videoState, setVideoState] = useState(false);
   const [playlist, onPlaylisthRequest] = useState([]);
@@ -24,6 +24,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const [currentEmotionImage, setCurrentEmotionImage] = useState(HAPPY);
   const [currentEmotionText, setCurrentEmotionText] = useState('Happy');
   const [testData, setTest] = useState([{ name: 0, emotion: 0 }]);
+
 
   const [currentEmotion, setCurrentEmotion] = useState(0);
   const [count, setCount] = useState(0);
@@ -37,7 +38,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     tempTable = testData
 
     tempTable.push({ name: count, emotion: value })
-    setCount(count + 1)
+    setCount(count + 5)
     setTest(tempTable)
 
   }
@@ -148,7 +149,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   };
 
   const gfg_Run = () => {
-    timer = setInterval(snap, 10000);
+    timer = setInterval(snap, 5000);
   }
 
   gfg_Run()
@@ -186,13 +187,13 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           margin={{
             top: 10,
             right: 50,
-            left: -60,
+            left: -20,
             bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <XAxis label={{ value: 'time/s', fill: 'white'}} dataKey="name" />
+          <YAxis  label={{ value: 'emotion lv.', angle: -90, position: 'outsideRight', fill: 'white'}}  />
           <Tooltip />
           <Legend />
           <Line type="monotone" dataKey="emotion" stroke="#8884d8" activeDot={{ r: 8 }} />
@@ -202,118 +203,71 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   )
 
-  const playVideo = async () => {
-    playerState.playVideo()
-    setVideoState(true)
-  }
+  const Player = (props: any) => (
+    <View style={{ position: 'absolute', width: '100%', bottom: 0, zIndex: 10, backgroundColor: '#000000c2' }}>
 
-  const pauseVideo = async () => {
-    playerState.pauseVideo()
-    setVideoState(false)
-  }
+      <View style={{ flex: 1, flexDirection: 'row', width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+        <View style={{ width: '10%', height: 'auto', padding: 5, justifyContent: 'center', alignItems: 'center' }} >
+          <FontAwesome
+            style={{ marginRight: 5 }}
+            name="volume-down"
+            size={15}
+            color={'#fff'}
+          />
+        </View>
 
-
-
-  const getPlaylist = async () => {
-    axios.get(
-      baseUrl + '/get-playlist'
-    ).then((response) => {
-      onPlaylisthRequest(response.data)
-      setCurrentVideoId(response.data[0].song_id)
-    }).catch((error) => {
-      console.log(error)
-    });
-  };
-
-  const setNextSong = async (state: boolean) => {
-    if (state) {
-      if (currentVideoNumber <= playlist.length) {
-        var nextNumber = currentVideoNumber + 1
-        setCurrentVideoId(playlist[nextNumber].song_id)
-        setCurrentVideoNumber(nextNumber)
-      }
-    } else {
-      getCalmSong()
-    }
-  }
-
-  useEffect(() => {
-    //Turn on camara
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-    })();
-
-    //get playlist
-    getPlaylist()
-  }, []);
-
-
-  const opts: YouTubeProps['opts'] = {
-    height: '390',
-    width: '100%',
-  };
-
-  return (
-    <View style={styles.container}>
-
-      {/* Youtube Player */}
-      <YouTube
-        videoId={currentVideoId}
-        opts={opts}
-        onStateChange={(e) => {
-          predictEmotionWhilePlayingSong(e)
-          if (e.data == 2) {// pause video state
-            setVideoState(false)
-          } else if (e.data == 1) { //start video state
-            setVideoState(true)
-          } else if (e.data == 0) { //end video state
-            setVideoState(false)
-          }
-        }}
-        onReady={(event) => {
-          setPlayerState(event.target)
-        }} />
-
-      <LinearGradient
-        colors={['#000', '#75dadf']}
-        style={styles.background}
-      />
-
-      {/* Emotion state */}
-      {/* <View style={{ backgroundColor: '#fff' }}>
-        {currentEmotion}
-      </View> */}
-
-      <ChartView testData={testData} />
+        <View style={{ width: '70%', height: 'auto', padding: 5, justifyContent: 'center', alignItems: 'center' }} >
+          <Slider
+            onValueChange={(e) => volumeChange(e)}
+            style={{ width: '100%', height: 20 }}
+            value={50}
+            minimumValue={0}
+            maximumValue={100}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#000000"
+          />
+        </View>
+        <View style={{ width: '10%', height: 'auto', padding: 5, justifyContent: 'center', alignItems: 'center' }} >
+          <FontAwesome
+            style={{ marginRight: 5 }}
+            name="volume-up"
+            size={15}
+            color={'#fff'}
+          />
+        </View>
+      </View>
 
       {/* Play pause button */}
-      <View style={{ alignItems: 'center', alignContent: 'center', marginVertical: 20 }}>
-        <Pressable
-          style={{
-            borderRadius: 100,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <LinearGradient
-            colors={['#fb00ffeb', '#26ced7f2']}
+      <View style={{ flex: 1, flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom:10 }}>
+        <View style={{ width: '30%', height: 'auto', padding: 5 }} >
+          <Pressable
             style={{
-              borderWidth: 1,
-              borderColor: '#2196f3',
+              borderRadius: 100,
               alignItems: 'center',
               justifyContent: 'center',
-              width: 90,
-              height: 90,
-              backgroundColor: '#2196f3',
-              borderRadius: 100,
-              shadowOpacity: 0.25,
-              shadowRadius: 30,
-              shadowOffset: {
-                height: 0,
-                width: 0,
-              },
             }}
           >
+
+            <FontAwesome
+              style={{ marginRight: 5 }}
+              name="backward"
+              size={15}
+              color={'#fff'}
+              onPress={() => setPreviousSong()}
+            />
+
+          </Pressable>
+        </View>
+
+        <View style={{ width: '40%', height: 'auto', padding: 5 }} >
+          <Pressable
+            style={{
+              borderRadius: 100,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+
             {videoState == false ?
               <FontAwesome
                 style={{ marginLeft: 10 }}
@@ -329,12 +283,129 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
                 onPress={() => pauseVideo()}
               />
             }
-          </LinearGradient>
-        </Pressable>
-      </View>
+          </Pressable>
+        </View>
 
-      <Camera style={styles.camera} ref={(r: any) => { camera = r }} type={type}></Camera>
+        <View style={{ width: '30%', height: 'auto', padding: 5 }} >
+          <Pressable
+            style={{
+              borderRadius: 100,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FontAwesome
+              style={{ marginLeft: 5 }}
+              name="forward"
+              size={15}
+              color={'#fff'}
+              onPress={() => setNextSong(true)}
+            />
+          </Pressable>
+        </View>
+      </View>
     </View>
+  )
+
+  const playVideo = async () => {
+    playerState.playVideo()
+    setVideoState(true)
+  }
+
+  const pauseVideo = async () => {
+    playerState.pauseVideo()
+    setVideoState(false)
+  }
+
+  const getPlaylist = async () => {
+    axios.get(
+      baseUrl + '/get-playlist'
+    ).then((response) => {
+      onPlaylisthRequest(response.data)
+      setCurrentVideoId(response.data[0].song_id)
+    }).catch((error) => {
+      console.log(error)
+    });
+  };
+
+  const setNextSong = async (state: boolean) => {
+    if (state) {
+      if (currentVideoNumber < playlist.length - 1) {
+        var nextNumber = currentVideoNumber + 1
+        setCurrentVideoId(playlist[nextNumber].song_id)
+        setCurrentVideoNumber(nextNumber)
+      }
+    } else {
+      getCalmSong()
+    }
+  }
+
+  const setPreviousSong = async () => {
+    console.log("here");
+    if (currentVideoNumber > 0) {
+      console.log("heddre");
+      var nextNumber = currentVideoNumber - 1
+      setCurrentVideoId(playlist[nextNumber].song_id)
+      setCurrentVideoNumber(nextNumber)
+    }
+  }
+
+  const volumeChange = async (value: any) => {
+    playerState.setVolume(value);
+  }
+
+
+  useEffect(() => {
+    //Turn on camara
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+    })();
+
+    //get playlist
+    getPlaylist()
+  }, []);
+
+  const opts: YouTubeProps['opts'] = {
+    height: '390',
+    width: '100%',
+  };
+
+
+
+  return (
+    <React.Fragment>
+      <Player></Player>
+
+      <ScrollView style={styles.container}>
+
+        {/* Youtube Player */}
+        <YouTube
+          videoId={currentVideoId}
+          opts={opts}
+          onStateChange={(e) => {
+            predictEmotionWhilePlayingSong(e)
+            if (e.data == 2) {// pause video state
+              setVideoState(false)
+            } else if (e.data == 1) { //start video state
+              setVideoState(true)
+            } else if (e.data == 0) { //end video state
+              setVideoState(false)
+            }
+          }}
+          onReady={(event) => {
+            setPlayerState(event.target)
+          }} />
+
+        <LinearGradient
+          colors={['#000', '#75dadf']}
+          style={styles.background}
+        />
+        <ChartView testData={testData} />
+        <Camera style={styles.camera} ref={(r: any) => { camera = r }} type={type}></Camera>
+      </ScrollView>
+    </React.Fragment>
+
+
 
   );
 }

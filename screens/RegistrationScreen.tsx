@@ -5,7 +5,7 @@ import { RootStackScreenProps } from "../types";
 import { LinearGradient } from 'expo-linear-gradient';  //import LinearGradient module
 import { LOGO } from "./background_imgs";
 
-export default function LoginScreen({ navigation }: any) {
+export default function RegistrationScreen({ navigation }: any) {
 
     const ButtonComponent = (props: any) => {
         return (
@@ -69,29 +69,30 @@ export default function LoginScreen({ navigation }: any) {
         )
     }
 
+    const navigate = async () => {
+        console.log("here");
+    }
+
     return (
         <View style={styles.container}>
             <LinearGradient
                 colors={['#262626', '#75dadf']}
                 style={styles.background}
             />
-            <View style={{height:120, width:120, borderRadius:100, alignContent:'center', alignItems:'center', margin:'auto',  zIndex:1, top:-30, backgroundColor:'#ffffff69'}}>
-            <Image
-                style={{
-                   
-                    width: '100%',
-                    height: '100%',
-                    resizeMode:'stretch'
-                }}
-                source={LOGO} />
+            <View style={{ height: 120, width: 120, borderRadius: 100, alignContent: 'center', alignItems: 'center', margin: 'auto', zIndex: 1, top: -140, backgroundColor: '#ffffff69' }}>
+                <Image
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        resizeMode: 'stretch'
+                    }}
+                    source={LOGO} />
             </View>
-           
-
             <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
 
-                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign in</Text>
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign up</Text>
 
-                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Mobile Number</Text>
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 40 }}>Mobile Number</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <InputField placeHolder="077xxxxxxx" secure={false}></InputField>
                 </View>
@@ -101,15 +102,20 @@ export default function LoginScreen({ navigation }: any) {
                     <InputField placeHolder="Password" secure={true}></InputField>
                 </View>
 
+
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Confirm Password</Text>
+                <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
+                    <InputField placeHolder="Confirm Password" secure={true}></InputField>
+                </View>
+
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginVertical: 15 }}>
-                    {/* <Text style={{ color: '#4a4141', fontWeight: '500', fontSize: 15 }}> Don't you have an account? <b>Sign up</b></Text> */}
-                    <Pressable onPress={() => navigation.navigate('Registration')}>
-                        <Text style={{ color: '#4a4141', fontWeight: '500', fontSize: 15 }}>Don't you have an account? <b>Sign up</b></Text>
+                    <Pressable onPress={() => navigation.navigate('Login')}>
+                        <Text style={{ color: '#4a4141', fontWeight: '500', fontSize: 15 }}>Do you have an account? <b>Sign in</b></Text>
                     </Pressable>
                 </View>
 
-                <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginTop: 10, marginBottom: 40 }}>
-                    <ButtonComponent buttonText="Sign in"></ButtonComponent>
+                <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginTop: 10, marginBottom: 30 }}>
+                    <ButtonComponent buttonText="Sign up"></ButtonComponent>
                 </View>
             </View>
         </View>

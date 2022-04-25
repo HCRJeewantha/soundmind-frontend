@@ -42,7 +42,7 @@ export default function TabThreeScreen({ navigation }: any) {
         })
     };
 
-    const playPlaylist = async () => {
+    const playPlaylist = async (songId:any) => {
         navigation.navigate('TabOne')
     };
 
@@ -102,7 +102,7 @@ export default function TabThreeScreen({ navigation }: any) {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                     }}
-                                    onPress={() => playPlaylist()}
+                                    onPress={() => playPlaylist(props.songId)}
                                 >
                                     <LinearGradient
                                         colors={['#fb00ffeb', '#26ced7f2']}
@@ -129,30 +129,6 @@ export default function TabThreeScreen({ navigation }: any) {
                                         />
                                     </LinearGradient>
                                 </TouchableOpacity>
-
-
-                                {/* <View style={{ marginBottom: 20 }}>
-                                    <Pressable
-                                        style={{
-                                            height: 80, width: 80, borderRadius: 100, backgroundColor: '#2196f3', shadowOpacity: 0.25,
-                                            shadowRadius: 30,
-                                            shadowOffset: {
-                                                height: 0,
-                                                width: 0,
-                                            },
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                        onPress={() => removeFromPlaylist()}
-                                    >
-                                        <FontAwesome
-                                            name="play"
-                                            style={{ marginLeft: 10 }}
-                                            size={38}
-                                            color={'#fff'}
-                                        />
-                                    </Pressable>
-                                </View> */}
                             </View>
                             <View style={styles.modelActionButtons}>
                                 <Pressable
@@ -245,7 +221,7 @@ export default function TabThreeScreen({ navigation }: any) {
                     keyExtractor={item => item}
                 />
                 <View style={styles.modelContainer}>
-                    <ModelView img={selectedSongImg} name={selectedSongName} />
+                    <ModelView img={selectedSongImg} name={selectedSongName} songId={selectedSongId}/>
                 </View>
 
                 <TouchableOpacity
