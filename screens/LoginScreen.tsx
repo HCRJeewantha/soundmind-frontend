@@ -75,20 +75,21 @@ export default function LoginScreen({ navigation }: any) {
                 colors={['#262626', '#75dadf']}
                 style={styles.background}
             />
-            <View style={{height:120, width:120, borderRadius:100, alignContent:'center', alignItems:'center', margin:'auto',  zIndex:1, top:-30, backgroundColor:'#ffffff69'}}>
+       
+           
+
+            <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+
+            <View style={{height:120, width:120, borderRadius:100, alignContent:'center', alignItems:'center', margin:'auto',  zIndex:1, top:-50, backgroundColor:'#ffffff69'}}>
             <Image
                 style={{
-                   
                     width: '100%',
                     height: '100%',
                     resizeMode:'stretch'
                 }}
                 source={LOGO} />
             </View>
-           
-
-            <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
-
+            
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign in</Text>
 
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Mobile Number</Text>
