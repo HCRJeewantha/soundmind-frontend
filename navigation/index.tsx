@@ -21,6 +21,8 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import LoginScreen from '../screens/LoginScreen';
 import RegistrationScreen from '../screens/RegistrationScreen';
+import TabFourScreen from '../screens/DashboardScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -47,6 +49,9 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+
+
       <Stack.Group screenOptions={{ presentation: 'modal' }} >
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -65,12 +70,21 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="TabTwo"
 
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         // tabBarStyle:{backgroundColor:'#fff'}
       }}>
+      {/* <BottomTab.Screen
+        name="TabFour"
+        component={TabFourScreen}
+        options={{
+          title: 'Home',
+          unmountOnBlur: true,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        }}
+      /> */}
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
@@ -111,6 +125,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
+
     </BottomTab.Navigator>
   );
 }

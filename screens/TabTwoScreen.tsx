@@ -82,7 +82,7 @@ export default function TabTwoScreen() {
           <FontAwesome
             name="ellipsis-h"
             size={25}
-            style={{ margin: '5px', color:'#fff' }}
+            style={{ margin: '5px', color: '#fff' }}
           />
         </Pressable>
       </View>
@@ -177,6 +177,8 @@ export default function TabTwoScreen() {
         style={styles.background}
       />
 
+
+
       <SafeAreaView style={styles.container}>
 
         <View style={{ flexDirection: 'row', width: '100%' }}>
@@ -185,9 +187,11 @@ export default function TabTwoScreen() {
               style={styles.input}
               placeholder="Search Songs"
               keyboardType="numeric"
-              onChange={(event) => setSearchParam(event.target.value)}
+              onChange={(event: any) => setSearchParam(event.target.value)}
             />
           </View>
+
+
           <View style={{ width: '20%', height: 'auto', marginLeft: 5 }}>
             <Pressable
               style={{
@@ -207,11 +211,17 @@ export default function TabTwoScreen() {
           </View>
         </View>
 
+        {/* <View style={{ flex: 1, flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
+          <Text style={{ color: '#fff', fontSize: 20 }}>Search </Text>
+        </View> */}
+
         <FlatList
           data={searchData}
           renderItem={renderItem}
         // keyExtractor={item => item}
         />
+       
+
         <View style={styles.modelContainer}>
           <ModelView img={selectedSongImg} name={selectedSongName} />
         </View>
@@ -230,7 +240,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     // color: '#fff',
-    backgroundColor:'#fff'
+    backgroundColor: '#fff'
 
   },
   modelContainer: {

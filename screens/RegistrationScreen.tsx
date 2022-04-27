@@ -4,8 +4,36 @@ import { View } from "../components/Themed";
 import { RootStackScreenProps } from "../types";
 import { LinearGradient } from 'expo-linear-gradient';  //import LinearGradient module
 import { LOGO } from "./background_imgs";
+import axios from 'axios'
+
+const baseUrl = 'http://127.0.0.1:8000';
 
 export default function RegistrationScreen({ navigation }: any) {
+
+    const [userName, setUserName] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const signUp = async () => {
+        const payload = {
+            "name": userName,
+            "mobile": mobile,
+            "password": password,
+            "confirm_password": confirmPassword
+        }
+
+        axios.post(
+          baseUrl + '/sign-up',
+          payload
+        ).then((response) => {
+          console.log(response)
+          navigation.navigate('Welcome')
+        }).catch((error) => {
+          console.log(error)
+        });
+    };
+
 
     const ButtonComponent = (props: any) => {
         return (
@@ -15,7 +43,7 @@ export default function RegistrationScreen({ navigation }: any) {
                     justifyContent: 'center',
                     width: '100%',
                 }}
-                onPress={() => navigation.navigate('Root')}>
+                onPress={() => signUp()}>
                 <LinearGradient
                     colors={['#50aeffeb', '#26ced7f2']}
                     style={{
@@ -59,6 +87,7 @@ export default function RegistrationScreen({ navigation }: any) {
                 }}>
                 <TextInput
                     secureTextEntry={props.secure}
+                    onChange={(event: any) => setUserName(event.target.value)}
                     style={{
                         height: '100%',
                         padding: '10px',
@@ -82,7 +111,7 @@ export default function RegistrationScreen({ navigation }: any) {
 
             <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
 
-                <View style={{ height: 120, width: 120, borderRadius: 100, alignContent: 'center', alignItems: 'center', margin: 'auto', zIndex: 1, top: 30, backgroundColor: '#ffffff69' }}>
+                {/* <View style={{ height: 120, width: 120, borderRadius: 100, alignContent: 'center', alignItems: 'center', margin: 'auto', zIndex: 1, top: 30, backgroundColor: '#ffffff69' }}>
                     <Image
                         style={{
                             width: '100%',
@@ -90,24 +119,117 @@ export default function RegistrationScreen({ navigation }: any) {
                             resizeMode: 'stretch'
                         }}
                         source={LOGO} />
-                </View>
+                </View> */}
 
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign up</Text>
 
-                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 40 }}>Mobile Number</Text>
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 40 }}>User Name</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
-                    <InputField placeHolder="077xxxxxxx" secure={false}></InputField>
+                    <View
+                        style={{
+                            width: '80%',
+                            height: '50px',
+                            borderRadius: 10,
+                            marginTop: '10px',
+                            shadowOpacity: 0.25,
+                            shadowRadius: 30,
+                            shadowOffset: {
+                                height: 0,
+                                width: 0,
+                            },
+                        }}>
+                        <TextInput
+                            secureTextEntry={false}
+                            onChange={(event: any) => setUserName(event.target.value)}
+                            style={{
+                                height: '100%',
+                                padding: '10px',
+                            }}
+                            placeholder="User Name"
+                        />
+                    </View>
+                </View>
+
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Mobile Number</Text>
+                <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
+                <View
+                        style={{
+                            width: '80%',
+                            height: '50px',
+                            borderRadius: 10,
+                            marginTop: '10px',
+                            shadowOpacity: 0.25,
+                            shadowRadius: 30,
+                            shadowOffset: {
+                                height: 0,
+                                width: 0,
+                            },
+                        }}>
+                        <TextInput
+                            secureTextEntry={false}
+                            onChange={(event: any) => setMobile(event.target.value)}
+                            style={{
+                                height: '100%',
+                                padding: '10px',
+                            }}
+                            placeholder="077xxxxxxx"
+                        />
+                    </View>
                 </View>
 
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Password</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
-                    <InputField placeHolder="Password" secure={true}></InputField>
+                     <View
+                        style={{
+                            width: '80%',
+                            height: '50px',
+                            borderRadius: 10,
+                            marginTop: '10px',
+                            shadowOpacity: 0.25,
+                            shadowRadius: 30,
+                            shadowOffset: {
+                                height: 0,
+                                width: 0,
+                            },
+                        }}>
+                        <TextInput
+                            secureTextEntry={true}
+                            onChange={(event: any) => setPassword(event.target.value)}
+                            style={{
+                                height: '100%',
+                                padding: '10px',
+                            }}
+                            placeholder="Password"
+                        />
+                    </View>
                 </View>
 
 
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Confirm Password</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
-                    <InputField placeHolder="Confirm Password" secure={true}></InputField>
+                    <View
+                        style={{
+                            width: '80%',
+                            height: '50px',
+                            borderRadius: 10,
+                            marginTop: '10px',
+                            shadowOpacity: 0.25,
+                            shadowRadius: 30,
+                            shadowOffset: {
+                                height: 0,
+                                width: 0,
+                            },
+                        }}>
+                        <TextInput
+                            secureTextEntry={true}
+                            onChange={(event: any) => setConfirmPassword(event.target.value)}
+                            style={{
+                                height: '100%',
+                                padding: '10px',
+                            }}
+                            placeholder="Password"
+                        />
+                    </View>
                 </View>
 
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginVertical: 15 }}>
