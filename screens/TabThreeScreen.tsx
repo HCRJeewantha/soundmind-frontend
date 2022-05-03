@@ -230,7 +230,7 @@ export default function TabThreeScreen({ navigation }: any) {
                         bottom: 20,
                         right: 20
                     }}
-                    onPress={() => playPlaylist()}
+                    // onPress={() => playPlaylist()}
                 >
                     <LinearGradient
                         colors={['#fb00ffeb', '#26ced7f2']}

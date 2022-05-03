@@ -22,11 +22,14 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const [playlist, onPlaylisthRequest] = useState<any>([]);
   const [currentVideoId, setCurrentVideoId] = useState('');
   const [currentVideoNumber, setCurrentVideoNumber] = useState(0);
+
   const [currentEmotionImage, setCurrentEmotionImage] = useState(HAPPY);
+  const [currentEmotionText, setCurrentEmotionText] = useState('Happy');
+
   const [isStressed, setIsStressed] = useState(false);
 
   const [afterSongName, setAfterSongName] = useState('');
-  const [afterSongImg, setAfterSongImg] = useState('');
+  const [afterSongImg, setAfterSongImg] = useState<any>('');
 
 
   const [testData, setTest] = useState([{ name: 0, emotion: 0 }]);
@@ -56,42 +59,55 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       case "angry":
         setCurrentEmotionImage(ANGRY)
         setIsStressed(true)
+        setCurrentEmotionText('Angry')
         setCurrentEmotion(currentEmotion - 1)
         break;
 
       case "fear":
         setCurrentEmotionImage(FEAR)
         setIsStressed(true)
+        setCurrentEmotionText('Fear')
+
         setCurrentEmotion(currentEmotion - 1)
         break;
 
       case "neutral":
         setCurrentEmotionImage(NEUTRAL)
         setIsStressed(false)
+        setCurrentEmotionText('Neutral')
+
         setCurrentEmotion(currentEmotion + 1)
         break;
 
       case "sad":
         setCurrentEmotionImage(SAD)
         setIsStressed(true)
+        setCurrentEmotionText('Sad')
+
         setCurrentEmotion(currentEmotion - 1)
         break;
 
       case "disgust":
         setCurrentEmotionImage(SAD)
         setIsStressed(true)
+        setCurrentEmotionText('Disgust')
+
         setCurrentEmotion(currentEmotion - 1)
         break;
 
       case "happy":
         setCurrentEmotionImage(HAPPY)
         setIsStressed(false)
+        setCurrentEmotionText('Happy')
+
         setCurrentEmotion(currentEmotion + 1)
         break;
 
       case "surprise":
         setCurrentEmotionImage(SAD)
         setIsStressed(false)
+        setCurrentEmotionText('Surprise')
+
         setCurrentEmotion(currentEmotion + 1)
         break;
 
@@ -120,20 +136,20 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   }
 
   const getCalmSong = async () => {
-    // setCurrentVideoId('hso3oR8PJss')
+    setCurrentVideoId('hso3oR8PJss')
 
-    axios.get(baseUrl + '/get-calm-songs').then((response) => {
-      var randomCalmSong = Math.floor(Math.random() * (25 - 0 + 1) + 0)
-      var calmSongName = response.data.tracks.track[0].name
-      var calmSongArtist = response.data.tracks.track[randomCalmSong].artist.name
-      axios.get(baseUrl + '/request-songs/' + calmSongName + ' by' + calmSongArtist).then((response) => {
-        setCurrentVideoId(response.data.items[0].id.videoId)
-      }).catch((error) => {
-        console.log(error)
-      });
-    }).catch((error) => {
-      console.log(error)
-    })
+    // axios.get(baseUrl + '/get-calm-songs').then((response) => {
+    //   var randomCalmSong = Math.floor(Math.random() * (25 - 0 + 1) + 0)
+    //   var calmSongName = response.data.tracks.track[0].name
+    //   var calmSongArtist = response.data.tracks.track[randomCalmSong].artist.name
+    //   axios.get(baseUrl + '/request-songs/' + calmSongName + ' by' + calmSongArtist).then((response) => {
+    //     setCurrentVideoId(response.data.items[0].id.videoId)
+    //   }).catch((error) => {
+    //     console.log(error)
+    //   });
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
   }
 
   const snap = async () => {
@@ -172,6 +188,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const ChartView = (props: any) => (
     <View style={{ flex: 1, flexDirection: 'row', width: '100%', marginBottom: 40 }}>
       <View style={{ width: '25%', height: '80px', padding: 5 }} >
+        <View style={{alignItems: 'center', alignContent: 'center', width: 'auto', height: 25, borderRadius: 5 }}>
+          <Text style={{ color: '#fff' }}>{currentEmotionText}</Text>
+        </View>
         {/* emoji face */}
         <View style={{ alignItems: 'center', alignContent: 'center', marginTop: 15 }}>
           <ModelView img={currentEmotionImage} />

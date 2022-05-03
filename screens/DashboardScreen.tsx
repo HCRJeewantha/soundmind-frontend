@@ -172,11 +172,6 @@ export default function TabFourScreen({ navigation }: RootTabScreenProps<'TabFou
                         bottom: 0,
                         right: 30,
                     }} />
-
-
-
-
-
             </ScrollView>
         </React.Fragment>
     );
