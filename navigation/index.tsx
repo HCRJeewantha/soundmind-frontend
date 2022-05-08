@@ -3,11 +3,11 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import React, { useState, useEffect } from "react";
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -25,6 +25,8 @@ import TabFourScreen from '../screens/DashboardScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -42,6 +44,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 
 function RootNavigator() {
+  const [isLogin, setIslogin] = useState<boolean>(false);
+
+  const id = localStorage.getItem('id')
+
+  // if (id) {
+  //   setIslogin(true)
+  // } else {
+  //   setIslogin(false)
+
+  // }
   return (
     <Stack.Navigator
     >
@@ -50,7 +62,6 @@ function RootNavigator() {
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
-
 
       <Stack.Group screenOptions={{ presentation: 'modal' }} >
         <Stack.Screen name="Modal" component={ModalScreen} />

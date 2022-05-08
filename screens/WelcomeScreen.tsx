@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Pressable, StyleSheet, TextInput, Text, Image } from "react-native";
+import React from "react";
+import { Pressable, StyleSheet, Text, Image } from "react-native";
 import { View } from "../components/Themed";
-import { RootStackScreenProps } from "../types";
-import { LinearGradient } from 'expo-linear-gradient';  //import LinearGradient module
-import { GETSTARTED, LOGO, WELCOME } from "./background_imgs";
-import axios from 'axios'
-
-const baseUrl = 'http://127.0.0.1:8000';
+import { LinearGradient } from 'expo-linear-gradient';
+import { LOGO, WELCOME } from "./background_imgs";
 
 export default function WelcomeScreen({ navigation }: any) {
 
     const ButtonComponent = (props: any) => {
         return (
             <Pressable
-
                 style={{
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -47,42 +42,12 @@ export default function WelcomeScreen({ navigation }: any) {
         )
     }
 
-    const InputField = (props: any) => {
-        return (
-            <View
-                style={{
-                    width: '80%',
-                    height: '50px',
-                    borderRadius: 10,
-                    marginTop: '10px',
-                    shadowOpacity: 0.25,
-                    shadowRadius: 30,
-                    shadowOffset: {
-                        height: 0,
-                        width: 0,
-                    },
-                }}>
-                <TextInput
-                    secureTextEntry={props.secure}
-                    style={{
-                        height: '100%',
-                        padding: '10px',
-                    }}
-                    placeholder={props.placeHolder}
-                />
-            </View>
-        )
-    }
-
     return (
         <View style={styles.container}>
             <LinearGradient
                 colors={['#262626', '#75dadf']}
                 style={styles.background}
             />
-
-
-
             <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
 
                 <View style={{ height: 80, width: 80, borderRadius: 100, alignContent: 'center', alignItems: 'center', margin: 'auto', zIndex: 1, top: -40, backgroundColor: '#ffffff69' }}>
@@ -94,10 +59,8 @@ export default function WelcomeScreen({ navigation }: any) {
                         }}
                         source={LOGO} />
                 </View>
-
                 <Text style={{ color: '#4a4141', fontWeight: '700', fontSize: 22, textAlign: 'center' }}>Welcome to Sound Mind</Text>
                 <Text style={{ color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20, textAlign: 'center' }}>You're well on your way to living a happier life,soundminder!</Text>
-
                 <View style={{ height: 210, width: 330, alignContent: 'center', alignItems: 'center', margin: 'auto', zIndex: 1, backgroundColor: 'none', marginVertical: 20 }}>
                     <Image
                         style={{
@@ -107,7 +70,6 @@ export default function WelcomeScreen({ navigation }: any) {
                         }}
                         source={WELCOME} />
                 </View>
-
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginTop: 10, marginBottom: 40 }}>
                     <ButtonComponent buttonText="Let's get started"></ButtonComponent>
                 </View>

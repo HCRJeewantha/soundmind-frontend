@@ -1,9 +1,7 @@
-import { StyleSheet, TextInput, Text, View, SafeAreaView, Modal, StatusBar, Pressable, FlatList, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Modal, StatusBar, Pressable, FlatList, Image, TouchableOpacity } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useState, useCallback, useRef, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SUNSET } from "./background_imgs";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -11,15 +9,11 @@ const baseUrl = 'http://127.0.0.1:8000';
 
 export default function TabThreeScreen({ navigation }: any) {
 
-    const [text, onChangeText] = useState("Search Songs");
-    const [number, onChangeNumber] = useState(null);
     const [searchData, onSearchRequest] = useState(null);
-
     const [selectedSongName, setSelectedSongName] = useState(null);
     const [selectedSongImg, setSelectedSongImg] = useState(null);
     const [selectedSongId, setSelectedSongId] = useState(null);
     const [modalVisible, setVisibleState] = useState(false);
-
 
     const setModalVisible = (visible: any) => {
         setVisibleState(visible)
@@ -42,7 +36,7 @@ export default function TabThreeScreen({ navigation }: any) {
         })
     };
 
-    const playPlaylist = async (songId:any) => {
+    const playPlaylist = async (songId: any) => {
         navigation.navigate('TabOne')
     };
 
@@ -73,7 +67,6 @@ export default function TabThreeScreen({ navigation }: any) {
                     setModalVisible(!modalVisible);
                 }}
             >
-
                 <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', height: '100%' }}>
                     <View style={{ position: 'absolute', bottom: '2%', margin: '0%', left: '2%', right: '2%' }}>
                         <View style={styles.centeredView}>
@@ -95,10 +88,9 @@ export default function TabThreeScreen({ navigation }: any) {
                                 <View style={{ marginBottom: 20 }}>
                                     <Text style={{ fontSize: 17 }}>Playlist | My Playlist</Text>
                                 </View>
-
                                 <TouchableOpacity
                                     style={{
-                                        marginVertical:20,
+                                        marginVertical: 20,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                     }}
@@ -159,7 +151,6 @@ export default function TabThreeScreen({ navigation }: any) {
             <View style={{ width: '10%', height: '80px', padding: 5 }} >
                 <Text style={styles.number}>{index + 1}</Text>
             </View>
-
             <View style={{ width: '30%', height: '80px', margin: 5 }} >
                 <Image
                     style={{
@@ -167,7 +158,6 @@ export default function TabThreeScreen({ navigation }: any) {
                         height: '100%',
                         resizeMode: 'contain',
                         borderRadius: 10,
-
                     }}
                     source={item.song_img} />
             </View>
@@ -192,28 +182,31 @@ export default function TabThreeScreen({ navigation }: any) {
 
 
     return (
-
         <View style={styles.mainContainer}>
             <LinearGradient
                 colors={['#000', '#75dadf']}
                 style={styles.background}
             />
             <SafeAreaView style={styles.container} >
-
+                <View style={{ position: 'absolute', top: 80, left: 10, zIndex: 10 }}>
+                    <Text style={{ color: '#fff', fontSize: 30, fontWeight: '600' }}>Good Afternoon {localStorage.getItem('name')}</Text>
+                </View>
                 <View style={{ position: 'absolute', top: 130, left: 10, zIndex: 10 }}>
-                    <Text style={{ color: '#fff', fontSize: 35, fontWeight: '600' }}>Good Afternoon</Text>
+                    <Text style={{ color: '#fff', fontSize: 15, fontWeight: '600' }}>
+                        You’re well on your way to living a
+                        happier life, Soundminder.
+                    </Text>
                 </View>
                 <View>
                     <Image
+                        blurRadius={2}
                         style={{
                             width: '100vw',
                             height: '210px',
                             resizeMode: 'contain',
-                            // borderRadius: 10
                         }}
                         source={SUNSET} />
                 </View>
-
                 <FlatList
                     style={{ width: '100%' }}
                     data={searchData}
@@ -221,16 +214,14 @@ export default function TabThreeScreen({ navigation }: any) {
                     keyExtractor={item => item}
                 />
                 <View style={styles.modelContainer}>
-                    <ModelView img={selectedSongImg} name={selectedSongName} songId={selectedSongId}/>
+                    <ModelView img={selectedSongImg} name={selectedSongName} songId={selectedSongId} />
                 </View>
-
                 <TouchableOpacity
                     style={{
                         position: 'absolute',
                         bottom: 20,
                         right: 20
                     }}
-                    // onPress={() => playPlaylist()}
                 >
                     <LinearGradient
                         colors={['#fb00ffeb', '#26ced7f2']}
@@ -259,7 +250,6 @@ export default function TabThreeScreen({ navigation }: any) {
                         />
                     </LinearGradient>
                 </TouchableOpacity>
-
             </SafeAreaView>
         </View>
     );
@@ -275,8 +265,6 @@ const styles = StyleSheet.create({
     },
     mainContainer: {
         flex: 1,
-        // display: 'flex',
-        // alignItems: 'center',
     },
     background: {
         zIndex: -10,
@@ -296,7 +284,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'flex-start' // if you want to fill rows left to right
+        alignItems: 'flex-start'
     },
     header: {
         fontSize: 32,

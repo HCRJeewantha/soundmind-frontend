@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, TextInput, Text } from "react-native";
 import { View } from "../components/Themed";
-import { LinearGradient } from 'expo-linear-gradient';  //import LinearGradient module
+import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios'
 import Toast from 'react-native-toast-message';
 
@@ -34,10 +34,14 @@ export default function RegistrationScreen({ navigation }: any) {
             baseUrl + '/sign-up',
             payload
         ).then((response) => {
-            showToast("Success", "Registration Successful", "success")
+            localStorage.setItem("id", response.data.id)
+            localStorage.setItem("name", response.data.name)
+            showToast("Success", "Login Successful", "success")
             navigation.navigate('Welcome')
         }).catch((error) => {
-            showToast("Error", "There is an error", "error")
+            if(error.response){
+                showToast("Error", error.response.data.detail, "error")
+            }
         });
     };
 
@@ -82,11 +86,8 @@ export default function RegistrationScreen({ navigation }: any) {
                 colors={['#262626', '#75dadf']}
                 style={styles.background}
             />
-
             <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
-
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign up</Text>
-
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 40 }}>User Name</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <View
@@ -113,7 +114,6 @@ export default function RegistrationScreen({ navigation }: any) {
                         />
                     </View>
                 </View>
-
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Mobile Number</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <View
@@ -140,7 +140,6 @@ export default function RegistrationScreen({ navigation }: any) {
                         />
                     </View>
                 </View>
-
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Password</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <View
@@ -167,8 +166,6 @@ export default function RegistrationScreen({ navigation }: any) {
                         />
                     </View>
                 </View>
-
-
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Confirm Password</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <View
@@ -195,13 +192,11 @@ export default function RegistrationScreen({ navigation }: any) {
                         />
                     </View>
                 </View>
-
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginVertical: 15 }}>
                     <Pressable onPress={() => navigation.navigate('Login')}>
                         <Text style={{ color: '#4a4141', fontWeight: '500', fontSize: 15 }}>Do you have an account? <b>Sign in</b></Text>
                     </Pressable>
                 </View>
-
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginTop: 10, marginBottom: 30 }}>
                     <ButtonSignUp buttonText="Sign up"></ButtonSignUp>
                 </View>

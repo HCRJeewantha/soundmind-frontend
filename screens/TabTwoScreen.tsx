@@ -1,21 +1,15 @@
 import { StyleSheet, TextInput, Text, View, SafeAreaView, Modal, StatusBar, Pressable, FlatList, Image } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import axios from 'axios'
-import customData from './sampleData.json';
-import selectSongPopup from '../components/selectSongPopup';
 import { LinearGradient } from "expo-linear-gradient";
 
 const baseUrl = 'http://127.0.0.1:8000';
 
 export default function TabTwoScreen() {
 
-  const [text, onChangeText] = useState("Search Songs");
-  const [number, onChangeNumber] = useState(null);
   const [searchParam, setSearchParam] = useState('');
-
   const [searchData, onSearchRequest] = useState(null);
-
   const [selectedSongName, setSelectedSongName] = useState(null);
   const [selectedSongImg, setSelectedSongImg] = useState(null);
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -27,8 +21,6 @@ export default function TabTwoScreen() {
   }
 
   const search = async (param: any) => {
-    // onSearchRequest(customData.items)
-
     axios.get(
       baseUrl + '/request-songs/' + param
     ).then((response) => {
@@ -76,7 +68,7 @@ export default function TabTwoScreen() {
       </View>
       <View style={{ width: '10%', height: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Pressable
-          style={[styles.button, styles.buttonOpen]}
+          style={[styles.button]}
           onPress={() => setSelectedValues(item.snippet.title, item.snippet.thumbnails.high.url, item.id.videoId).then(() => { setModalVisible(true) })}
         >
           <FontAwesome
@@ -164,7 +156,6 @@ export default function TabTwoScreen() {
       </Modal>
     </View>
   )
-
   const [modalVisible, setVisibleState] = useState(false);
   const setModalVisible = (visible: any) => {
     setVisibleState(visible)
@@ -176,11 +167,7 @@ export default function TabTwoScreen() {
         colors={['#000', '#75dadf']}
         style={styles.background}
       />
-
-
-
       <SafeAreaView style={styles.container}>
-
         <View style={{ flexDirection: 'row', width: '100%' }}>
           <View style={{ width: '80%', height: 'auto' }}>
             <TextInput
@@ -190,8 +177,6 @@ export default function TabTwoScreen() {
               onChange={(event: any) => setSearchParam(event.target.value)}
             />
           </View>
-
-
           <View style={{ width: '20%', height: 'auto', marginLeft: 5 }}>
             <Pressable
               style={{
@@ -210,22 +195,14 @@ export default function TabTwoScreen() {
             </Pressable>
           </View>
         </View>
-
-        {/* <View style={{ flex: 1, flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
-          <Text style={{ color: '#fff', fontSize: 20 }}>Search </Text>
-        </View> */}
-
         <FlatList
           data={searchData}
           renderItem={renderItem}
         // keyExtractor={item => item}
         />
-       
-
         <View style={styles.modelContainer}>
           <ModelView img={selectedSongImg} name={selectedSongName} />
         </View>
-
       </SafeAreaView>
     </View>
   );
@@ -239,9 +216,7 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     borderRadius: 5,
-    // color: '#fff',
     backgroundColor: '#fff'
-
   },
   modelContainer: {
     display: 'flex',
@@ -256,8 +231,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    // display: 'flex',
-    // alignItems: 'center',
   },
   background: {
     zIndex: -10,
@@ -272,7 +245,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start' // if you want to fill rows left to right
+    alignItems: 'flex-start'
   },
   header: {
     fontSize: 32,
@@ -307,10 +280,8 @@ const styles = StyleSheet.create({
     bottom: '0%'
   },
   modalView: {
-    // margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    // padding: 35,
     height: 'auto',
     width: '96%',
     alignItems: "center",
@@ -320,9 +291,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2
-  },
-  buttonOpen: {
-    // backgroundColor: "#F194FF",
   },
   buttonClose: {
     backgroundColor: "#2196F3",
