@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, TextInput, Text, Image } from "react-native";
 import { View } from "../components/Themed";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,9 +6,10 @@ import { LOGO } from "./background_imgs";
 import axios from 'axios'
 import Toast from 'react-native-toast-message';
 
+//Base URL
 const baseUrl = 'http://127.0.0.1:8000';
 
-export default function LoginScreen({ navigation }: any) {
+export function LoginScreen({ navigation }: any) {
 
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
@@ -36,45 +37,11 @@ export default function LoginScreen({ navigation }: any) {
             showToast("Success", "Login Successful", "success")
             navigation.navigate('Welcome')
         }).catch((error) => {
-            if(error.response){
+            if (error.response) {
                 showToast("Error", error.response.data.detail, "error")
             }
         });
     };
-
-    const ButtonComponent = (props: any) => {
-        return (
-            <Pressable
-                style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '100%',
-                }}
-                onPress={() => signIn()}>
-                <LinearGradient
-                    colors={['#50aeffeb', '#26ced7f2']}
-                    style={{
-                        marginTop: 30,
-                        borderRadius: 10,
-                        borderWidth: 1,
-                        borderColor: '#2196f3',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '80%',
-                        height: '50px',
-                        backgroundColor: '#2196f3',
-                        shadowOpacity: 0.25,
-                        shadowRadius: 30,
-                        shadowOffset: {
-                            height: 0,
-                            width: 0,
-                        },
-                    }}>
-                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>{props.buttonText}</Text>
-                </LinearGradient>
-            </Pressable>
-        )
-    }
 
     return (
         <View style={styles.container}>
@@ -93,7 +60,7 @@ export default function LoginScreen({ navigation }: any) {
                         }}
                         source={LOGO} />
                 </View>
-                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign in</Text>
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Signin</Text>
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 20 }}>Mobile Number</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <View
@@ -152,7 +119,36 @@ export default function LoginScreen({ navigation }: any) {
                     </Pressable>
                 </View>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginTop: 10, marginBottom: 40 }}>
-                    <ButtonComponent buttonText="Sign in"></ButtonComponent>
+                    <Pressable
+                        testID="signInBtn"
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '100%',
+                        }}
+                        onPress={() => signIn()}>
+                        <LinearGradient
+                            colors={['#50aeffeb', '#26ced7f2']}
+                            style={{
+                                marginTop: 30,
+                                borderRadius: 10,
+                                borderWidth: 1,
+                                borderColor: '#2196f3',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '80%',
+                                height: '50px',
+                                backgroundColor: '#2196f3',
+                                shadowOpacity: 0.25,
+                                shadowRadius: 30,
+                                shadowOffset: {
+                                    height: 0,
+                                    width: 0,
+                                },
+                            }}>
+                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Sign In</Text>
+                        </LinearGradient>
+                    </Pressable>
                 </View>
             </View>
         </View>

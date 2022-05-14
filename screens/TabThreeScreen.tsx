@@ -4,25 +4,33 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { SUNSET } from "./background_imgs";
 import { LinearGradient } from "expo-linear-gradient";
+import Toast from 'react-native-toast-message';
 
 const baseUrl = 'http://127.0.0.1:8000';
-
-export default function TabThreeScreen({ navigation }: any) {
+let selectedSongName:any;
+let selectedSongImg:any;
+let selectedSongId:any;
+export function TabThreeScreen({ navigation }: any) {
 
     const [searchData, onSearchRequest] = useState(null);
-    const [selectedSongName, setSelectedSongName] = useState(null);
-    const [selectedSongImg, setSelectedSongImg] = useState(null);
-    const [selectedSongId, setSelectedSongId] = useState(null);
     const [modalVisible, setVisibleState] = useState(false);
+
+    const showToast = (title: any, message: any, type: any) => {
+        Toast.show({
+          type: type,
+          text1: title,
+          text2: message
+        });
+      }
 
     const setModalVisible = (visible: any) => {
         setVisibleState(visible)
     }
 
     const setSelectedValues = async (name: any, song_img: any, song_id: any) => {
-        setSelectedSongName(name)
-        setSelectedSongImg(song_img)
-        setSelectedSongId(song_id)
+        selectedSongName = name
+        selectedSongImg = song_img
+        selectedSongId = song_id
     }
 
     const getPlaylist = async () => {
@@ -32,7 +40,9 @@ export default function TabThreeScreen({ navigation }: any) {
             console.log(response)
             onSearchRequest(response.data)
         }).catch((error) => {
-            console.log(error)
+            if (error.response) {
+                showToast("Error", error.response.data.detail, "error")
+              }
         })
     };
 
@@ -44,10 +54,11 @@ export default function TabThreeScreen({ navigation }: any) {
         axios.delete(
             baseUrl + '/remove-song-from-playlist/' + selectedSongId
         ).then((response) => {
-            console.log(response)
             setModalVisible(!modalVisible)
         }).catch((error) => {
-            console.log(error)
+            if (error.response) {
+                showToast("Error", error.response.data.detail, "error")
+              }
         }).finally(() => {
             getPlaylist();
         })
@@ -167,6 +178,7 @@ export default function TabThreeScreen({ navigation }: any) {
             </View>
             <View style={{ width: '10%', height: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Pressable
+                    testID={item.song_id}
                     style={[styles.button, styles.buttonOpen]}
                     onPress={() => setSelectedValues(item.name, item.song_img, item.song_id).then(() => { setModalVisible(true) })}
                 >

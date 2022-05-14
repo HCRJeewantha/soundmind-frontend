@@ -1,0 +1,1181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing search song by name Player UI render correctly 1`] = `
+Array [
+  <View
+    style={
+      Object {
+        "backgroundColor": "#000000c2",
+        "bottom": 0,
+        "position": "absolute",
+        "width": "100%",
+        "zIndex": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": "auto",
+          "justifyContent": "center",
+          "marginTop": 10,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "height": "auto",
+            "justifyContent": "center",
+            "padding": 5,
+            "width": "10%",
+          }
+        }
+      >
+        <Text />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "height": "auto",
+            "justifyContent": "center",
+            "padding": 5,
+            "width": "70%",
+          }
+        }
+      >
+        <RNCSlider
+          disabled={false}
+          enabled={true}
+          inverted={false}
+          maximumTrackTintColor="#000000"
+          maximumValue={100}
+          minimumTrackTintColor="#FFFFFF"
+          minimumValue={0}
+          onChange={[Function]}
+          onRNCSliderAccessibilityAction={null}
+          onRNCSliderSlidingComplete={null}
+          onRNCSliderSlidingStart={null}
+          onRNCSliderValueChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          step={0}
+          style={
+            Array [
+              Object {
+                "height": 40,
+              },
+              Object {
+                "height": 20,
+                "width": "100%",
+              },
+            ]
+          }
+          tapToSeek={false}
+          thumbImage={null}
+          value={50}
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "height": "auto",
+            "justifyContent": "center",
+            "padding": 5,
+            "width": "10%",
+          }
+        }
+      >
+        <Text />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": "auto",
+            "padding": 5,
+            "width": "30%",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderRadius": 100,
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": "auto",
+            "padding": 5,
+            "width": "40%",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderRadius": 100,
+              "justifyContent": "center",
+            }
+          }
+          testID="playButton"
+        >
+          <Text />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": "auto",
+            "padding": 5,
+            "width": "30%",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderRadius": 100,
+              "justifyContent": "center",
+            }
+          }
+          testID="nextBtn"
+        >
+          <Text />
+        </View>
+      </View>
+    </View>
+  </View>,
+  <RCTScrollView
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <ViewManagerAdapter_ExpoLinearGradient
+        proxiedProperties={
+          Object {
+            "colors": Array [
+              4278190080,
+              4285913823,
+            ],
+            "endPoint": undefined,
+            "locations": undefined,
+            "startPoint": undefined,
+          }
+        }
+        style={
+          Object {
+            "height": "100%",
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": "60%",
+            "zIndex": -10,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "marginBottom": 40,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": "80px",
+              "padding": 5,
+              "width": "25%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignContent": "center",
+                "alignItems": "center",
+                "borderRadius": 5,
+                "height": 25,
+                "width": "auto",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#fff",
+                }
+              }
+            >
+              Happy
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignContent": "center",
+                "alignItems": "center",
+                "marginTop": 15,
+              }
+            }
+          >
+            <View>
+              <Image
+                source={1}
+                style={
+                  Object {
+                    "height": "50px",
+                    "resizeMode": "contain",
+                    "width": "50px",
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#0deb72",
+                "borderRadius": 5,
+                "height": 25,
+                "marginTop": 10,
+                "width": "auto",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "alignContent": "center",
+                  "alignItems": "center",
+                  "color": "#fff",
+                  "margin": "auto",
+                }
+              }
+            >
+              Stressless
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "height": "80px",
+              "margin": 5,
+              "width": "75%",
+            }
+          }
+        >
+          <div
+            className="recharts-wrapper"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "cursor": "default",
+                "height": 130,
+                "position": "relative",
+                "width": 320,
+              }
+            }
+          >
+            <svg
+              className="recharts-surface"
+              height={130}
+              version="1.1"
+              viewBox="0 0 320 130"
+              width={320}
+            >
+              <defs>
+                <clipPath
+                  id="recharts1-clip"
+                >
+                  <rect
+                    height={85}
+                    width={230}
+                    x={40}
+                    y={10}
+                  />
+                </clipPath>
+              </defs>
+              <g
+                className="recharts-cartesian-grid"
+              >
+                <g
+                  className="recharts-cartesian-grid-horizontal"
+                >
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={40}
+                    x2={270}
+                    y={10}
+                    y1={95}
+                    y2={95}
+                  />
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={40}
+                    x2={270}
+                    y={10}
+                    y1={73.75}
+                    y2={73.75}
+                  />
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={40}
+                    x2={270}
+                    y={10}
+                    y1={52.5}
+                    y2={52.5}
+                  />
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={40}
+                    x2={270}
+                    y={10}
+                    y1={31.25}
+                    y2={31.25}
+                  />
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={40}
+                    x2={270}
+                    y={10}
+                    y1={10}
+                    y2={10}
+                  />
+                </g>
+                <g
+                  className="recharts-cartesian-grid-vertical"
+                >
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={40}
+                    x2={40}
+                    y={10}
+                    y1={10}
+                    y2={95}
+                  />
+                  <line
+                    fill="none"
+                    height={85}
+                    offset={
+                      Object {
+                        "bottom": 35,
+                        "brushBottom": 35,
+                        "height": 85,
+                        "left": 40,
+                        "right": 50,
+                        "top": 10,
+                        "width": 230,
+                      }
+                    }
+                    stroke="#ccc"
+                    strokeDasharray="3 3"
+                    width={230}
+                    x={40}
+                    x1={270}
+                    x2={270}
+                    y={10}
+                    y1={10}
+                    y2={95}
+                  />
+                </g>
+              </g>
+              <g
+                className="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"
+              >
+                <line
+                  className="recharts-cartesian-axis-line"
+                  fill="none"
+                  height={30}
+                  orientation="bottom"
+                  stroke="#666"
+                  type="category"
+                  width={230}
+                  x={40}
+                  x1={40}
+                  x2={270}
+                  y={95}
+                  y1={95}
+                  y2={95}
+                />
+                <g
+                  className="recharts-cartesian-axis-ticks"
+                >
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={30}
+                      orientation="bottom"
+                      stroke="#666"
+                      type="category"
+                      width={230}
+                      x={40}
+                      x1={40}
+                      x2={40}
+                      y={95}
+                      y1={101}
+                      y2={95}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={30}
+                      orientation="bottom"
+                      stroke="none"
+                      textAnchor="middle"
+                      type="category"
+                      width={230}
+                      x={40}
+                      y={103}
+                    >
+                      <tspan
+                        dy="0.71em"
+                        x={40}
+                      >
+                        0
+                      </tspan>
+                    </text>
+                  </g>
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={30}
+                      orientation="bottom"
+                      stroke="#666"
+                      type="category"
+                      width={230}
+                      x={40}
+                      x1={270}
+                      x2={270}
+                      y={95}
+                      y1={101}
+                      y2={95}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={30}
+                      orientation="bottom"
+                      stroke="none"
+                      textAnchor="middle"
+                      type="category"
+                      width={230}
+                      x={270}
+                      y={103}
+                    >
+                      <tspan
+                        dy="0.71em"
+                        x={270}
+                      >
+                        auto
+                      </tspan>
+                    </text>
+                  </g>
+                </g>
+                <text
+                  className="recharts-text recharts-label"
+                  fill="white"
+                  offset={5}
+                  textAnchor="middle"
+                  x={155}
+                  y={110}
+                >
+                  <tspan
+                    dy="0.355em"
+                    x={155}
+                  >
+                    time/s
+                  </tspan>
+                </text>
+              </g>
+              <g
+                className="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis"
+              >
+                <line
+                  className="recharts-cartesian-axis-line"
+                  fill="none"
+                  height={85}
+                  orientation="left"
+                  stroke="#666"
+                  type="number"
+                  width={60}
+                  x={-20}
+                  x1={40}
+                  x2={40}
+                  y={10}
+                  y1={10}
+                  y2={95}
+                />
+                <g
+                  className="recharts-cartesian-axis-ticks"
+                >
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={85}
+                      orientation="left"
+                      stroke="#666"
+                      type="number"
+                      width={60}
+                      x={-20}
+                      x1={34}
+                      x2={40}
+                      y={10}
+                      y1={95}
+                      y2={95}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={85}
+                      orientation="left"
+                      stroke="none"
+                      textAnchor="end"
+                      type="number"
+                      width={60}
+                      x={32}
+                      y={95}
+                    >
+                      <tspan
+                        dy="0.355em"
+                        x={32}
+                      >
+                        0
+                      </tspan>
+                    </text>
+                  </g>
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={85}
+                      orientation="left"
+                      stroke="#666"
+                      type="number"
+                      width={60}
+                      x={-20}
+                      x1={34}
+                      x2={40}
+                      y={10}
+                      y1={73.75}
+                      y2={73.75}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={85}
+                      orientation="left"
+                      stroke="none"
+                      textAnchor="end"
+                      type="number"
+                      width={60}
+                      x={32}
+                      y={73.75}
+                    >
+                      <tspan
+                        dy="0.355em"
+                        x={32}
+                      >
+                        1
+                      </tspan>
+                    </text>
+                  </g>
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={85}
+                      orientation="left"
+                      stroke="#666"
+                      type="number"
+                      width={60}
+                      x={-20}
+                      x1={34}
+                      x2={40}
+                      y={10}
+                      y1={52.5}
+                      y2={52.5}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={85}
+                      orientation="left"
+                      stroke="none"
+                      textAnchor="end"
+                      type="number"
+                      width={60}
+                      x={32}
+                      y={52.5}
+                    >
+                      <tspan
+                        dy="0.355em"
+                        x={32}
+                      >
+                        2
+                      </tspan>
+                    </text>
+                  </g>
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={85}
+                      orientation="left"
+                      stroke="#666"
+                      type="number"
+                      width={60}
+                      x={-20}
+                      x1={34}
+                      x2={40}
+                      y={10}
+                      y1={31.25}
+                      y2={31.25}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={85}
+                      orientation="left"
+                      stroke="none"
+                      textAnchor="end"
+                      type="number"
+                      width={60}
+                      x={32}
+                      y={31.25}
+                    >
+                      <tspan
+                        dy="0.355em"
+                        x={32}
+                      >
+                        3
+                      </tspan>
+                    </text>
+                  </g>
+                  <g
+                    className="recharts-layer recharts-cartesian-axis-tick"
+                  >
+                    <line
+                      className="recharts-cartesian-axis-tick-line"
+                      fill="none"
+                      height={85}
+                      orientation="left"
+                      stroke="#666"
+                      type="number"
+                      width={60}
+                      x={-20}
+                      x1={34}
+                      x2={40}
+                      y={10}
+                      y1={10}
+                      y2={10}
+                    />
+                    <text
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      fill="#666"
+                      height={85}
+                      orientation="left"
+                      stroke="none"
+                      textAnchor="end"
+                      type="number"
+                      width={60}
+                      x={32}
+                      y={10}
+                    >
+                      <tspan
+                        dy="0.355em"
+                        x={32}
+                      >
+                        4
+                      </tspan>
+                    </text>
+                  </g>
+                </g>
+                <text
+                  className="recharts-text recharts-label"
+                  fill="white"
+                  offset={5}
+                  textAnchor="middle"
+                  transform="rotate(-90, 10, 52.5)"
+                  x={10}
+                  y={52.5}
+                >
+                  <tspan
+                    dy="0.355em"
+                    x={10}
+                  >
+                    emotion lv.
+                  </tspan>
+                </text>
+              </g>
+              <g
+                className="recharts-layer recharts-line"
+              >
+                <g
+                  className="recharts-layer recharts-line-dots"
+                  clipPath={null}
+                >
+                  <circle
+                    className="recharts-dot recharts-line-dot"
+                    cx={40}
+                    cy={95}
+                    fill="#fff"
+                    height={85}
+                    points={
+                      Array [
+                        Object {
+                          "payload": Object {
+                            "emotion": 0,
+                            "name": 0,
+                          },
+                          "value": 0,
+                          "x": 40,
+                          "y": 95,
+                        },
+                      ]
+                    }
+                    r={3}
+                    stroke="#8884d8"
+                    strokeWidth={1}
+                    type="monotone"
+                    width={230}
+                  />
+                </g>
+              </g>
+            </svg>
+            <div
+              className="recharts-legend-wrapper"
+              style={
+                Object {
+                  "bottom": 5,
+                  "height": "auto",
+                  "left": -20,
+                  "position": "absolute",
+                  "width": 290,
+                }
+              }
+            >
+              <ul
+                className="recharts-default-legend"
+                style={
+                  Object {
+                    "margin": 0,
+                    "padding": 0,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                <li
+                  className="recharts-legend-item legend-item-0"
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "marginRight": 10,
+                    }
+                  }
+                >
+                  <svg
+                    className="recharts-surface"
+                    height={14}
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "marginRight": 4,
+                        "verticalAlign": "middle",
+                      }
+                    }
+                    version="1.1"
+                    viewBox="0 0 32 32"
+                    width={14}
+                  >
+                    <path
+                      className="recharts-legend-icon"
+                      d="M0,16h10.666666666666666
+            A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+            H32M21.333333333333332,16
+            A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+                      fill="none"
+                      stroke="#8884d8"
+                      strokeWidth={4}
+                    />
+                  </svg>
+                  <span
+                    className="recharts-legend-item-text"
+                    style={
+                      Object {
+                        "color": "#8884d8",
+                      }
+                    }
+                  >
+                    emotion
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div
+              className="recharts-tooltip-wrapper"
+              style={
+                Object {
+                  "MozTransform": "translate(undefinedpx, undefinedpx)",
+                  "OTransform": "translate(undefinedpx, undefinedpx)",
+                  "WebkitTransform": "translate(undefinedpx, undefinedpx)",
+                  "left": 0,
+                  "msTransform": "translate(undefinedpx, undefinedpx)",
+                  "pointerEvents": "none",
+                  "position": "absolute",
+                  "top": 0,
+                  "transform": "translate(undefinedpx, undefinedpx)",
+                  "visibility": "hidden",
+                }
+              }
+            >
+              <div
+                className="recharts-default-tooltip"
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "border": "1px solid #ccc",
+                    "margin": 0,
+                    "padding": 10,
+                    "whiteSpace": "nowrap",
+                  }
+                }
+              >
+                <p
+                  className="recharts-tooltip-label"
+                  style={
+                    Object {
+                      "margin": 0,
+                    }
+                  }
+                >
+                  
+                </p>
+              </div>
+            </div>
+          </div>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "none",
+            "height": "auto",
+            "justifyContent": "center",
+            "marginVertical": 10,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "#00000052",
+              "borderRadius": 10,
+              "flex": 1,
+              "flexDirection": "row",
+              "width": "95%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "backgroundColor": "none",
+                "height": "auto",
+                "justifyContent": "center",
+                "width": "30%",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignContent": "center",
+                  "alignItems": "center",
+                  "backgroundColor": "none",
+                  "height": 85,
+                  "width": 90,
+                }
+              }
+            >
+              <Image
+                style={
+                  Object {
+                    "borderBottomLeftRadius": 10,
+                    "borderTopLeftRadius": 10,
+                    "height": "100%",
+                    "resizeMode": "stretch",
+                    "width": "100%",
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "backgroundColor": "none",
+                "height": "auto",
+                "paddingTop": 2,
+                "width": "70%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#fff",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                }
+              }
+            >
+              Comming up next
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#fff",
+                  "fontSize": 10,
+                  "fontWeight": "400",
+                  "paddingBottom": 5,
+                }
+              }
+            >
+              From Playlist
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={
+                Object {
+                  "color": "#fff",
+                  "fontSize": 13,
+                  "fontWeight": "400",
+                }
+              }
+              testID="afterSongName"
+            />
+          </View>
+        </View>
+      </View>
+      <ViewManagerAdapter_ExponentCamera
+        proxiedProperties={
+          Object {
+            "autoFocus": undefined,
+            "faceDetectorSettings": Object {},
+            "flashMode": undefined,
+            "focusDepth": 0,
+            "onBarCodeScanned": undefined,
+            "onCameraReady": [Function],
+            "onFacesDetected": [Function],
+            "onMountError": [Function],
+            "onPictureSaved": [Function],
+            "type": undefined,
+            "whiteBalance": undefined,
+            "zoom": 0,
+          }
+        }
+        style={
+          Object {
+            "flex": 1,
+            "position": "absolute",
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>,
+]
+`;

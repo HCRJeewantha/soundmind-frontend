@@ -7,7 +7,7 @@ import Toast from 'react-native-toast-message';
 
 const baseUrl = 'http://127.0.0.1:8000';
 
-export default function RegistrationScreen({ navigation }: any) {
+export function RegistrationScreen({ navigation }: any) {
 
     const [userName, setUserName] = useState('');
     const [mobile, setMobile] = useState('');
@@ -87,7 +87,7 @@ export default function RegistrationScreen({ navigation }: any) {
                 style={styles.background}
             />
             <View style={{ width: '100%', height: 'auto', bottom: 0, position: 'absolute', backgroundColor: '#ffffff69', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
-                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Sign up</Text>
+                <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '700', fontSize: 22, marginTop: 40 }}>Signup</Text>
                 <Text style={{ marginLeft: '10%', color: '#4a4141', fontWeight: '600', fontSize: 15, marginTop: 40 }}>User Name</Text>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none' }}>
                     <View
@@ -188,7 +188,7 @@ export default function RegistrationScreen({ navigation }: any) {
                                 height: '100%',
                                 padding: '10px',
                             }}
-                            placeholder="Password"
+                            placeholder="Confirem Password"
                         />
                     </View>
                 </View>

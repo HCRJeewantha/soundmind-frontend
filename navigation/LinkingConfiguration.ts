@@ -13,7 +13,7 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Root: {
+      Tabs: {
         screens: {
           TabOne: {
             screens: {
@@ -39,10 +39,9 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
       Modal: 'modal',
       NotFound: '*',
-      Login: 'login',
+      Root: 'login',
       Registration: 'registration',
       Welcome: 'welcome',
-
     },
   },
 };

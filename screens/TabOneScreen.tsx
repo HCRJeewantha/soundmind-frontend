@@ -1,7 +1,6 @@
-import { Button, StyleSheet, View, Image, Pressable, ScrollView, Text } from 'react-native';
-import { RootTabScreenProps } from '../types';
-import React, { useState, useEffect, useRef } from "react";
-import axios from 'axios'
+import { StyleSheet, View, Image, Pressable, ScrollView, Text } from 'react-native';
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { Camera } from 'expo-camera';
 import { FontAwesome } from '@expo/vector-icons';
@@ -9,30 +8,48 @@ import { ANGRY, FEAR, HAPPY, NEUTRAL, SAD } from './emotion_imgs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import Slider from '@react-native-community/slider';
-
+import Toast from 'react-native-toast-message';
 const baseUrl = 'http://127.0.0.1:8000';
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+let playlist: any = []
+let currentVideoId: any
+let currentVideoNumber: number = 0
+let afterSongName: string;
+let afterSongImg: any;
+let currentEmotionImage: any = HAPPY
+let currentEmotionText: any = 'Happy'
+let volume: number = 50
 
+export function TabOneScreen() {
   const ws = new WebSocket('ws://localhost:8000/ws');
 
-  const [type, setType] = useState(Camera.Constants.Type.back);
   const [videoState, setVideoState] = useState(false);
-  const [playlist, onPlaylisthRequest] = useState<any>([]);
-  const [currentVideoId, setCurrentVideoId] = useState('');
-  const [currentVideoNumber, setCurrentVideoNumber] = useState(0);
-  const [currentEmotionImage, setCurrentEmotionImage] = useState(HAPPY);
-  const [currentEmotionText, setCurrentEmotionText] = useState('Happy');
   const [isStressed, setIsStressed] = useState(false);
-  const [afterSongName, setAfterSongName] = useState('');
-  const [afterSongImg, setAfterSongImg] = useState<any>('');
   const [testData, setTest] = useState([{ name: 0, emotion: 0 }]);
   const [currentEmotion, setCurrentEmotion] = useState(0);
   const [count, setCount] = useState(0);
   const [playerState, setPlayerState] = useState<any>();
 
+  const onPlayerReady: YouTubeProps['onReady'] = (event) => {
+    // access to player in all event handlers via event.target
+    setPlayerState(event.target)
+  }
+
+  const opts: YouTubeProps['opts'] = {
+    height: '390',
+    width: '100%',
+  };
+
   let camera: Camera;
   let timer: any;
+
+  const showToast = (title: any, message: any, type: any) => {
+    Toast.show({
+      type: type,
+      text1: title,
+      text2: message
+    });
+  }
 
   const createDataTable = (value: any, count: number) => {
     var tempTable = []
@@ -47,49 +64,49 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     setCount(count + 1)
     switch (JSON.parse(event.data).dominant_emotion) {
       case "angry":
-        setCurrentEmotionImage(ANGRY)
+        currentEmotionImage = ANGRY
         setIsStressed(true)
-        setCurrentEmotionText('Angry')
+        currentEmotionText = 'Angry'
         setCurrentEmotion(currentEmotion - 1)
         break;
       case "fear":
-        setCurrentEmotionImage(FEAR)
+        currentEmotionImage = FEAR
         setIsStressed(true)
-        setCurrentEmotionText('Fear')
+        currentEmotionText = 'Fear'
         setCurrentEmotion(currentEmotion - 1)
         break;
       case "neutral":
-        setCurrentEmotionImage(NEUTRAL)
+        currentEmotionImage = NEUTRAL
         setIsStressed(false)
-        setCurrentEmotionText('Neutral')
+        currentEmotionText = 'Neutral'
         setCurrentEmotion(currentEmotion + 1)
         break;
       case "sad":
-        setCurrentEmotionImage(SAD)
+        currentEmotionImage = SAD
         setIsStressed(true)
-        setCurrentEmotionText('Sad')
+        currentEmotionText = 'Sad'
         setCurrentEmotion(currentEmotion - 1)
         break;
       case "disgust":
-        setCurrentEmotionImage(SAD)
+        currentEmotionImage = SAD
         setIsStressed(true)
-        setCurrentEmotionText('Disgust')
+        currentEmotionText = 'Disgust'
         setCurrentEmotion(currentEmotion - 1)
         break;
       case "happy":
-        setCurrentEmotionImage(HAPPY)
+        currentEmotionImage = HAPPY
         setIsStressed(false)
-        setCurrentEmotionText('Happy')
+        currentEmotionText = 'Happy'
         setCurrentEmotion(currentEmotion + 1)
         break;
       case "surprise":
-        setCurrentEmotionImage(SAD)
+        currentEmotionImage = SAD
         setIsStressed(false)
-        setCurrentEmotionText('Surprise')
+        currentEmotionText = 'Surprise'
         setCurrentEmotion(currentEmotion + 1)
         break;
       default:
-        setCurrentEmotionImage(NEUTRAL)
+        currentEmotionImage = NEUTRAL
         setIsStressed(false)
         break;
     }
@@ -112,19 +129,23 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   }
 
   const getCalmSong = async () => {
-    setCurrentVideoId('hso3oR8PJss')
-    // axios.get(baseUrl + '/get-calm-songs').then((response) => {
-    //   var randomCalmSong = Math.floor(Math.random() * (25 - 0 + 1) + 0)
-    //   var calmSongName = response.data.tracks.track[0].name
-    //   var calmSongArtist = response.data.tracks.track[randomCalmSong].artist.name
-    //   axios.get(baseUrl + '/request-songs/' + calmSongName + ' by' + calmSongArtist).then((response) => {
-    //     setCurrentVideoId(response.data.items[0].id.videoId)
-    //   }).catch((error) => {
-    //     console.log(error)
-    //   });
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
+    // setCurrentVideoId('hso3oR8PJss')
+    axios.get(baseUrl + '/get-calm-songs').then((response) => {
+      var randomCalmSong = Math.floor(Math.random() * (25 - 0 + 1) + 0)
+      var calmSongName = response.data.tracks.track[0].name
+      var calmSongArtist = response.data.tracks.track[randomCalmSong].artist.name
+      axios.get(baseUrl + '/request-songs/' + calmSongName + ' by' + calmSongArtist).then((response) => {
+        currentVideoId = response.data.items[0].id.videoId
+      }).catch((error) => {
+        if (error.response) {
+          showToast("Error", error.response.data.detail, "error")
+        }
+      });
+    }).catch((error) => {
+      if (error.response) {
+        showToast("Error", error.response.data.detail, "error")
+      }
+    })
   }
 
   const snap = async () => {
@@ -134,7 +155,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       var base64result = photo.uri.substr(photo.uri.indexOf(',') + 1);
       await ws.send(base64result)
     }
-
   };
 
   const gfg_Run = () => {
@@ -146,12 +166,10 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const gfg_Stop = () => {
     clearInterval(timer);
   }
-  
+
   const playVideo = async () => {
     playerState.playVideo()
     setVideoState(true)
-    getAfterSong()
-
   }
 
   const pauseVideo = async () => {
@@ -163,10 +181,14 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     axios.get(
       baseUrl + '/get-playlist'
     ).then((response) => {
-      onPlaylisthRequest(response.data)
-      setCurrentVideoId(response.data[0].song_id)
+      playlist = response.data
+      currentVideoId = response.data[0].song_id
+      getAfterSong()
+
     }).catch((error) => {
-      console.log(error)
+      if (error.response) {
+        showToast("Error", error.response.data.detail, "error")
+      }
     })
   };
 
@@ -174,9 +196,10 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     if (state) {
       if (currentVideoNumber < playlist.length - 1) {
         var nextNumber = currentVideoNumber + 1
-        setCurrentVideoId(playlist[nextNumber].song_id)
-        setCurrentVideoNumber(nextNumber)
+        currentVideoId = playlist[nextNumber].song_id
+        currentVideoNumber = nextNumber
         setVideoState(false)
+        getAfterSong()
       }
     } else {
       getCalmSong()
@@ -188,21 +211,24 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const getAfterSong = async () => {
     if (currentVideoNumber < playlist.length - 1) {
       var nextNumber = currentVideoNumber + 1
-      setAfterSongName(playlist[nextNumber].name)
-      setAfterSongImg(playlist[nextNumber].song_img)
+      afterSongName = playlist[nextNumber].name
+      afterSongImg = playlist[nextNumber].song_img
     }
   }
 
   const setPreviousSong = async () => {
     if (currentVideoNumber > 0) {
       var nextNumber = currentVideoNumber - 1
-      setCurrentVideoId(playlist[nextNumber].song_id)
+      currentVideoNumber = currentVideoNumber - 1
+      currentVideoId = playlist[nextNumber].song_id
       setVideoState(false)
+      getAfterSong()
     }
   }
 
   const volumeChange = async (value: any) => {
-    playerState.setVolume(value);
+    volume = value
+    playerState.setVolume(volume);
   }
 
   useEffect(() => {
@@ -215,12 +241,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     getPlaylist()
   }, []);
 
-  const opts: YouTubeProps['opts'] = {
-    height: '390',
-    width: '100%',
-  };
-
-  const ModelView = (props: any) => (
+  const EmojiFace = (props: any) => (
     <View>
       <Image
         style={{
@@ -240,7 +261,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
         </View>
         {/* emoji face */}
         <View style={{ alignItems: 'center', alignContent: 'center', marginTop: 15 }}>
-          <ModelView img={currentEmotionImage} />
+          <EmojiFace img={currentEmotionImage} />
         </View>
 
         {isStressed == false ?
@@ -318,6 +339,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
             }}
           >
             <FontAwesome
+              testID='previousBtn'
               style={{ marginRight: 5 }}
               name="backward"
               size={15}
@@ -327,32 +349,45 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           </Pressable>
         </View>
         <View style={{ width: '40%', height: 'auto', padding: 5 }} >
-          <Pressable
-            style={{
-              borderRadius: 100,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {videoState == false ?
+
+          {videoState == false ?
+            <Pressable
+              testID='playButton'
+              onPress={() => playVideo()}
+              style={{
+                borderRadius: 100,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <FontAwesome
                 style={{ marginLeft: 10 }}
                 name="play"
                 size={38}
                 color={'#fff'}
-                onPress={() => playVideo()}
-              /> :
+              />
+            </Pressable> :
+            <Pressable
+              onPress={() => pauseVideo()}
+              style={{
+                borderRadius: 100,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <FontAwesome
                 name="pause"
                 size={33}
                 color={'#fff'}
-                onPress={() => pauseVideo()}
               />
-            }
-          </Pressable>
+            </Pressable>
+          }
+
         </View>
         <View style={{ width: '30%', height: 'auto', padding: 5 }} >
           <Pressable
+            testID='nextBtn'
+            onPress={() => setNextSong(true)}
             style={{
               borderRadius: 100,
               alignItems: 'center',
@@ -364,7 +399,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
               name="forward"
               size={15}
               color={'#fff'}
-              onPress={() => setNextSong(true)}
             />
           </Pressable>
         </View>
@@ -391,7 +425,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
         <View style={{ width: '70%', height: 'auto', alignItems: 'flex-start', backgroundColor: 'none', paddingTop: 2 }} >
           <Text style={{ fontSize: 20, fontWeight: '600', color: '#fff' }}>Comming up next</Text>
           <Text style={{ fontSize: 10, fontWeight: '400', color: '#fff', paddingBottom: 5 }}>From Playlist</Text>
-          <Text numberOfLines={2} style={{ fontSize: 13, fontWeight: '400', color: '#fff' }}>{afterSongName}</Text>
+          <Text testID='afterSongName' numberOfLines={2} style={{ fontSize: 13, fontWeight: '400', color: '#fff' }}>{afterSongName}</Text>
         </View>
 
       </View>
@@ -416,16 +450,15 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
               setVideoState(false)
             }
           }}
-          onReady={(event) => {
-            setPlayerState(event.target)
-          }} />
+          onReady={onPlayerReady}
+        />
         <LinearGradient
           colors={['#000', '#75dadf']}
           style={styles.background}
         />
         <ChartView testData={testData} />
         <NextSong />
-        <Camera style={styles.camera} ref={(r: any) => { camera = r }} type={type}></Camera>
+        <Camera style={styles.camera} ref={(r: any) => { camera = r }} ></Camera>
       </ScrollView>
     </React.Fragment>
   );
@@ -463,4 +496,3 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-

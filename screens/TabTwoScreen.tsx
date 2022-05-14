@@ -3,31 +3,40 @@ import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from "react";
 import axios from 'axios'
 import { LinearGradient } from "expo-linear-gradient";
+import Toast from 'react-native-toast-message';
 
 const baseUrl = 'http://127.0.0.1:8000';
-
-export default function TabTwoScreen() {
+let selectedSongName:any;
+let selectedSongImg:any;
+let selectedSongId:any;
+export function TabTwoScreen() {
 
   const [searchParam, setSearchParam] = useState('');
   const [searchData, onSearchRequest] = useState(null);
-  const [selectedSongName, setSelectedSongName] = useState(null);
-  const [selectedSongImg, setSelectedSongImg] = useState(null);
-  const [selectedSongId, setSelectedSongId] = useState(null);
+
+  const showToast = (title: any, message: any, type: any) => {
+    Toast.show({
+      type: type,
+      text1: title,
+      text2: message
+    });
+  }
 
   const setSelectedValues = async (name: any, song_img: any, song_id: any) => {
-    setSelectedSongName(name)
-    setSelectedSongImg(song_img)
-    setSelectedSongId(song_id)
+    selectedSongName = name
+    selectedSongImg = song_img
+    selectedSongId = song_id
   }
 
   const search = async (param: any) => {
     axios.get(
       baseUrl + '/request-songs/' + param
     ).then((response) => {
-      console.log(response.data.items)
       onSearchRequest(response.data.items)
     }).catch((error) => {
-      console.log(error)
+      if (error.response) {
+        showToast("Error", error.response.data.detail, "error")
+      }
     });
   };
 
@@ -41,10 +50,12 @@ export default function TabTwoScreen() {
       baseUrl + '/add-songs-to-playlist',
       payload
     ).then((response) => {
-      console.log(response)
+      showToast("Success", "Song added to playlist", "success")
       setModalVisible(!modalVisible);
     }).catch((error) => {
-      console.log(error)
+      if (error.response) {
+        showToast("Error", error.response.data.detail, "error")
+      }
     });
   };
 
@@ -68,6 +79,7 @@ export default function TabTwoScreen() {
       </View>
       <View style={{ width: '10%', height: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Pressable
+          testID="selectSongBtn"
           style={[styles.button]}
           onPress={() => setSelectedValues(item.snippet.title, item.snippet.thumbnails.high.url, item.id.videoId).then(() => { setModalVisible(true) })}
         >
@@ -179,6 +191,7 @@ export default function TabTwoScreen() {
           </View>
           <View style={{ width: '20%', height: 'auto', marginLeft: 5 }}>
             <Pressable
+              testID="searchBtn"
               style={{
                 backgroundColor: '#2196f3', height: 40,
                 margin: 12,
