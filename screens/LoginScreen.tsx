@@ -23,6 +23,7 @@ export function LoginScreen({ navigation }: any) {
     }
 
     const signIn = async () => {
+
         const payload = {
             "mobile": mobile,
             "password": password

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Pressable, ScrollView, Text } from 'react-native';
+import { StyleSheet, View, Image, Pressable, ScrollView, Text, Alert } from 'react-native';
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import YouTube, { YouTubeProps } from 'react-youtube';
@@ -20,7 +20,7 @@ let currentEmotionImage: any = HAPPY
 let currentEmotionText: any = 'Happy'
 let volume: number = 50
 
-export function TabOneScreen() {
+export function TabOneScreen({ navigation }: any) {
   const ws = new WebSocket('ws://localhost:8000/ws');
 
   const [videoState, setVideoState] = useState(false);
@@ -34,6 +34,16 @@ export function TabOneScreen() {
     // access to player in all event handlers via event.target
     setPlayerState(event.target)
   }
+
+  useEffect(() => {
+    //Turn on camara
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+    })();
+
+    //get playlist
+    getPlaylist()
+  }, []);
 
   const opts: YouTubeProps['opts'] = {
     height: '390',
@@ -179,11 +189,12 @@ export function TabOneScreen() {
 
   const getPlaylist = async () => {
     axios.get(
-      baseUrl + '/get-playlist'
+      baseUrl + '/get-playlist/' + localStorage.getItem('id')
     ).then((response) => {
       playlist = response.data
       currentVideoId = response.data[0].song_id
       getAfterSong()
+      console.log(response.data);
 
     }).catch((error) => {
       if (error.response) {
@@ -230,16 +241,6 @@ export function TabOneScreen() {
     volume = value
     playerState.setVolume(volume);
   }
-
-  useEffect(() => {
-    //Turn on camara
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-    })();
-
-    //get playlist
-    getPlaylist()
-  }, []);
 
   const EmojiFace = (props: any) => (
     <View>

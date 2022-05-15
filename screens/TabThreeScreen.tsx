@@ -3,25 +3,29 @@ import { FontAwesome } from '@expo/vector-icons';
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { SUNSET } from "./background_imgs";
+import { MORNING } from "./background_imgs";
+import { AFTERNOON } from "./background_imgs";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from 'react-native-toast-message';
 
 const baseUrl = 'http://127.0.0.1:8000';
-let selectedSongName:any;
-let selectedSongImg:any;
-let selectedSongId:any;
+let selectedSongName: any;
+let selectedSongImg: any;
+let selectedSongId: any;
 export function TabThreeScreen({ navigation }: any) {
 
     const [searchData, onSearchRequest] = useState(null);
     const [modalVisible, setVisibleState] = useState(false);
+    const [greeting, setGreeting] = useState('');
+    const [greetingImage, setGreetingImage] = useState(SUNSET);
 
     const showToast = (title: any, message: any, type: any) => {
         Toast.show({
-          type: type,
-          text1: title,
-          text2: message
+            type: type,
+            text1: title,
+            text2: message
         });
-      }
+    }
 
     const setModalVisible = (visible: any) => {
         setVisibleState(visible)
@@ -35,14 +39,14 @@ export function TabThreeScreen({ navigation }: any) {
 
     const getPlaylist = async () => {
         axios.get(
-            baseUrl + '/get-playlist'
+            baseUrl + '/get-playlist/' + localStorage.getItem('id')
         ).then((response) => {
             console.log(response)
             onSearchRequest(response.data)
         }).catch((error) => {
             if (error.response) {
                 showToast("Error", error.response.data.detail, "error")
-              }
+            }
         })
     };
 
@@ -52,19 +56,34 @@ export function TabThreeScreen({ navigation }: any) {
 
     const removeFromPlaylist = async () => {
         axios.delete(
-            baseUrl + '/remove-song-from-playlist/' + selectedSongId
+            baseUrl + '/remove-song-from-playlist/' + selectedSongId + '/' + localStorage.getItem('id')
         ).then((response) => {
             setModalVisible(!modalVisible)
         }).catch((error) => {
             if (error.response) {
                 showToast("Error", error.response.data.detail, "error")
-              }
+            }
         }).finally(() => {
             getPlaylist();
         })
     }
 
     useEffect(() => {
+        //Greeting
+        var currentTime = new Date();
+        if (currentTime.getHours() < 12) {
+            setGreeting("Good Morning")
+            setGreetingImage(MORNING)
+        }
+        else if (currentTime.getHours() < 17) {
+            setGreeting("Good Afternoon")
+            setGreetingImage(AFTERNOON)
+        }
+        else {
+            setGreeting("Good Evening")
+            setGreetingImage(SUNSET)
+        }
+
         getPlaylist()
     }, [])
 
@@ -201,7 +220,7 @@ export function TabThreeScreen({ navigation }: any) {
             />
             <SafeAreaView style={styles.container} >
                 <View style={{ position: 'absolute', top: 80, left: 10, zIndex: 10 }}>
-                    <Text style={{ color: '#fff', fontSize: 30, fontWeight: '600' }}>Good Afternoon {localStorage.getItem('name')}</Text>
+                    <Text style={{ color: '#fff', fontSize: 30, fontWeight: '600' }}>{greeting} {localStorage.getItem('name')}</Text>
                 </View>
                 <View style={{ position: 'absolute', top: 130, left: 10, zIndex: 10 }}>
                     <Text style={{ color: '#fff', fontSize: 15, fontWeight: '600' }}>
@@ -217,7 +236,7 @@ export function TabThreeScreen({ navigation }: any) {
                             height: '210px',
                             resizeMode: 'contain',
                         }}
-                        source={SUNSET} />
+                        source={greetingImage} />
                 </View>
                 <FlatList
                     style={{ width: '100%' }}

@@ -6,9 +6,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import Toast from 'react-native-toast-message';
 
 const baseUrl = 'http://127.0.0.1:8000';
-let selectedSongName:any;
-let selectedSongImg:any;
-let selectedSongId:any;
+let selectedSongName: any;
+let selectedSongImg: any;
+let selectedSongId: any;
 export function TabTwoScreen() {
 
   const [searchParam, setSearchParam] = useState('');
@@ -47,13 +47,14 @@ export function TabTwoScreen() {
       "song_id": selectedSongId
     }
     axios.post(
-      baseUrl + '/add-songs-to-playlist',
+      baseUrl + '/users/' + localStorage.getItem('id') + '/playlist-songs',
       payload
     ).then((response) => {
       showToast("Success", "Song added to playlist", "success")
       setModalVisible(!modalVisible);
     }).catch((error) => {
       if (error.response) {
+        setModalVisible(!modalVisible);
         showToast("Error", error.response.data.detail, "error")
       }
     });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, Image } from "react-native";
 import { View } from "../components/Themed";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -35,36 +35,36 @@ export function WelcomeScreen({ navigation }: any) {
                         source={WELCOME} />
                 </View>
                 <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: 'none', marginTop: 10, marginBottom: 40 }}>
-                <Pressable
-                style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '100%',
-                }}
-                onPress={() => navigation.navigate('Tabs')}
-            >
-                <LinearGradient
-                    colors={['#50aeffeb', '#26ced7f2']}
-                    style={{
-                        marginTop: 30,
-                        borderRadius: 10,
-                        borderWidth: 1,
-                        borderColor: '#2196f3',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '80%',
-                        height: '50px',
-                        backgroundColor: '#2196f3',
-                        shadowOpacity: 0.25,
-                        shadowRadius: 30,
-                        shadowOffset: {
-                            height: 0,
-                            width: 0,
-                        },
-                    }}>
-                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Let's get started</Text>
-                </LinearGradient>
-            </Pressable>
+                    <Pressable
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '100%',
+                        }}
+                        onPress={() => navigation.navigate('Tabs')}
+                    >
+                        <LinearGradient
+                            colors={['#50aeffeb', '#26ced7f2']}
+                            style={{
+                                marginTop: 30,
+                                borderRadius: 10,
+                                borderWidth: 1,
+                                borderColor: '#2196f3',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '80%',
+                                height: '50px',
+                                backgroundColor: '#2196f3',
+                                shadowOpacity: 0.25,
+                                shadowRadius: 30,
+                                shadowOffset: {
+                                    height: 0,
+                                    width: 0,
+                                },
+                            }}>
+                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Let's get started</Text>
+                        </LinearGradient>
+                    </Pressable>
                 </View>
             </View>
         </View>
