@@ -219,6 +219,15 @@ Array [
     }
   >
     <View>
+      <div
+        className=""
+      >
+        <div
+          className={null}
+          id={null}
+          loading={null}
+        />
+      </div>
       <ViewManagerAdapter_ExpoLinearGradient
         proxiedProperties={
           Object {

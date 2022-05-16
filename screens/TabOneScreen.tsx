@@ -72,7 +72,9 @@ export function TabOneScreen({ navigation }: any) {
   ws.onmessage = function socketConnection(event) {
     createDataTable(currentEmotion, count)
     setCount(count + 1)
-    switch (JSON.parse(event.data).dominant_emotion) {
+    console.log(JSON.parse(event.data));
+    
+    switch (JSON.parse(event.data)) {
       case "angry":
         currentEmotionImage = ANGRY
         setIsStressed(true)
@@ -110,7 +112,7 @@ export function TabOneScreen({ navigation }: any) {
         setCurrentEmotion(currentEmotion + 1)
         break;
       case "surprise":
-        currentEmotionImage = SAD
+        currentEmotionImage = HAPPY
         setIsStressed(false)
         currentEmotionText = 'Surprise'
         setCurrentEmotion(currentEmotion + 1)

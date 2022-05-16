@@ -21,41 +21,41 @@ describe('Testing search song by name', () => {
     /*
     Intergration Testing
     */
-    test("Play a song", async () => {
-        const component = (
-            <NavigationContainer>
-                <TabOneScreen />
-            </NavigationContainer>
-        );
-        const { queryByTestId } = render(component);
-        const playSong = await queryByTestId("playBtn");
-        fireEvent(playSong, 'press');
-    });
+    // test("Play a song", async () => {
+    //     const component = (
+    //         <NavigationContainer>
+    //             <TabOneScreen />
+    //         </NavigationContainer>
+    //     );
+    //     const { queryByTestId } = render(component);
+    //     const playSong = await queryByTestId("playBtn");
+    //     fireEvent(playSong, 'press');
+    // });
 
-    test("Play previous song", async () => {
-        const component = (
-            <NavigationContainer>
-                <TabOneScreen />
-            </NavigationContainer>
-        );
-        const { queryByTestId } = render(component);
-        const getPreviousSong = await queryByTestId("previousBtn");
-        fireEvent(getPreviousSong, 'press');
-        const afterSongName = await queryByTestId('afterSongName');
-        expect(afterSongName).toBeTruthy();
-    });
+    // test("Play previous song", async () => {
+    //     const component = (
+    //         <NavigationContainer>
+    //             <TabOneScreen />
+    //         </NavigationContainer>
+    //     );
+    //     const { queryByTestId } = render(component);
+    //     const getPreviousSong = await queryByTestId("previousBtn");
+    //     fireEvent(getPreviousSong, 'press');
+    //     const afterSongName = await queryByTestId('afterSongName');
+    //     expect(afterSongName).toBeTruthy();
+    // });
 
-    test("Play next song", async () => {
-        const component = (
-            <NavigationContainer>
-                <TabOneScreen />
-            </NavigationContainer>
-        );
-        const { queryByTestId } = render(component);
-        const geNextSong = await queryByTestId("nextBtn");
-        fireEvent(geNextSong, 'press');
-        const afterSongName = await queryByTestId('afterSongName');
-        expect(afterSongName).toBeTruthy();
-    });
+    // test("Play next song", async () => {
+    //     const component = (
+    //         <NavigationContainer>
+    //             <TabOneScreen />
+    //         </NavigationContainer>
+    //     );
+    //     const { queryByTestId } = render(component);
+    //     const geNextSong = await queryByTestId("nextBtn");
+    //     fireEvent(geNextSong, 'press');
+    //     const afterSongName = await queryByTestId('afterSongName');
+    //     expect(afterSongName).toBeTruthy();
+    // });
 
 });

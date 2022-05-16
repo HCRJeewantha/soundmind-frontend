@@ -37,7 +37,6 @@ describe('Testing search song by name', () => {
         );
         const { queryByTestId } = render(component);
         const toClick = await queryByTestId("selectSongBtn");
-
         // fireEvent(toClick, 'press');
 
         // const newBody = await findByText('the number you have chosen is 5');

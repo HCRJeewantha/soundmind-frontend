@@ -62,7 +62,8 @@ exports[`Testing search song by name Playlist UI render correctly 1`] = `
           }
         }
       >
-        Good Afternoon 
+        
+         
       </Text>
     </View>
     <View
