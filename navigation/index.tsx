@@ -22,6 +22,7 @@ import { LoginScreen } from '../screens/LoginScreen';
 import { RegistrationScreen } from '../screens/RegistrationScreen';
 import TabFourScreen from '../screens/DashboardScreen';
 import { WelcomeScreen } from '../screens/WelcomeScreen';
+import { TabFiveScreen } from "../screens/TabFiveScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
 
@@ -80,27 +81,22 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       /> */}
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+        options={{
           title: 'Player',
           tabBarIcon: ({ color }) => <TabBarIcon name="play" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
+        }}
+      /> */}
+      <BottomTab.Screen
+        name="TabFive"
+        component={TabFiveScreen}
+        options={{
+          unmountOnBlur: true,
+          title: 'Player',
+          tabBarIcon: ({ color }) => <TabBarIcon name="play" color={color} />,
+        }}
       />
       <BottomTab.Screen
         name="TabTwo"
@@ -120,7 +116,6 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
-
     </BottomTab.Navigator>
   );
 }

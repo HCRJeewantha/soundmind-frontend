@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, Modal, StatusBar, Pressable, Flat
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import { SUNSET } from "./background_imgs";
+import { NOFOUND, SUNSET } from "./background_imgs";
 import { MORNING } from "./background_imgs";
 import { AFTERNOON } from "./background_imgs";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,6 +18,7 @@ export function TabThreeScreen({ navigation }: any) {
     const [modalVisible, setVisibleState] = useState(false);
     const [greeting, setGreeting] = useState('');
     const [greetingImage, setGreetingImage] = useState(SUNSET);
+    const [notFound, setNotfoundVisible] = useState(false);
 
     const showToast = (title: any, message: any, type: any) => {
         Toast.show({
@@ -46,6 +47,9 @@ export function TabThreeScreen({ navigation }: any) {
         }).catch((error) => {
             if (error.response) {
                 showToast("Error", error.response.data.detail, "error")
+                if (error.response.status == 404) {
+                    setNotfoundVisible(true)
+                }
             }
         })
     };
@@ -176,7 +180,6 @@ export function TabThreeScreen({ navigation }: any) {
     )
 
     const renderItem = ({ item, index }: any) => (
-
         <View style={{ flex: 1, flexDirection: 'row', borderRadius: 2, width: '100%', backgroundColor: '#b400ff33' }}>
             <View style={{ width: '10%', height: '80px', padding: 5 }} >
                 <Text style={styles.number}>{index + 1}</Text>
@@ -242,7 +245,7 @@ export function TabThreeScreen({ navigation }: any) {
                     style={{ width: '100%' }}
                     data={searchData}
                     renderItem={renderItem}
-                    keyExtractor={item => item}
+                // keyExtractor={item => item}
                 />
                 <View style={styles.modelContainer}>
                     <ModelView img={selectedSongImg} name={selectedSongName} songId={selectedSongId} />
@@ -282,11 +285,47 @@ export function TabThreeScreen({ navigation }: any) {
                     </LinearGradient>
                 </TouchableOpacity>
             </SafeAreaView>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={notFound}
+                onRequestClose={() => {
+                    setNotfoundVisible(!notFound);
+                }}
+            >
+                <View style={styles.centeredViewNotFound}>
+                    <View style={styles.modalViewNotFound}>
+                        <Image
+                            style={{
+                                width: '150px',
+                                height: '150px',
+                                resizeMode: 'contain',
+                            }}
+                            source={NOFOUND} />
+                        <Text style={styles.modalTextNotFound}>No songs found in your playlist. Please add songs to playlist to continue!</Text>
+                        <Pressable
+                            style={[styles.buttonModelNotFound, styles.buttonCloseNotFound]}
+                            onPress={() => {
+                                navigation.navigate('TabTwo')
+                                setNotfoundVisible(!notFound)
+                            }}
+                        >
+                            <Text style={styles.textStyleNotFound}>Search Songs</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    buttonModel: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
     container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
@@ -386,5 +425,46 @@ const styles = StyleSheet.create({
         height: 'auto',
         width: '96%',
         alignItems: "center",
-    }
+    },
+
+
+
+    buttonCloseNotFound: {
+        backgroundColor: "#2196F3",
+    },
+    centeredViewNotFound: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalViewNotFound: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    textStyleNotFound: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalTextNotFound: {
+        marginBottom: 15,
+        textAlign: "center"
+    },
+    buttonModelNotFound: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
 });

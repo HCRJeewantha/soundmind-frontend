@@ -1,4 +1,5 @@
 export const SUNSET = require('./sunset.jpg'); 
+export const NOFOUND = require('./nofound.jpg'); 
 export const MORNING = require('./morning.jpeg'); 
 export const AFTERNOON = require('./afternoon.jpeg'); 
 export const LOGO = require('./logo.png'); 

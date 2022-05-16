@@ -35,6 +35,11 @@ const linking: LinkingOptions<RootStackParamList> = {
               TabFourScreen: 'four',
             },
           },
+          TabFive: {
+            screens: {
+              TabFourScreen: 'five',
+            },
+          },
         },
       },
       NotFound: '*',

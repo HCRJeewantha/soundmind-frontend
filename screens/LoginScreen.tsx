@@ -22,26 +22,44 @@ export function LoginScreen({ navigation }: any) {
         });
     }
 
-    const signIn = async () => {
-
-        const payload = {
-            "mobile": mobile,
-            "password": password
+    const validations = () => {
+        let formIsValid = true;
+        if (!mobile) {
+            showToast("Error", "Mobile Number is required", "error")
+            formIsValid = false;
         }
+        if (mobile.length > 11) {
+            showToast("Error", "Mobile Number shoud less than 10", "error")
+            formIsValid = false;
+        }
+        if (!password) {
+            showToast("Error", "Password required", "error")
+            formIsValid = false;
+        }
+        return formIsValid;
+    }
 
-        axios.post(
-            baseUrl + '/sign-in',
-            payload
-        ).then((response) => {
-            localStorage.setItem("id", response.data.id)
-            localStorage.setItem("name", response.data.name)
-            showToast("Success", "Login Successful", "success")
-            navigation.navigate('Welcome')
-        }).catch((error) => {
-            if (error.response) {
-                showToast("Error", error.response.data.detail, "error")
+    const signIn = async () => {
+        if (validations()) {
+            const payload = {
+                "mobile": mobile,
+                "password": password
             }
-        });
+
+            axios.post(
+                baseUrl + '/sign-in',
+                payload
+            ).then((response) => {
+                localStorage.setItem("id", response.data.id)
+                localStorage.setItem("name", response.data.name)
+                showToast("Success", "Login Successful", "success")
+                navigation.navigate('Welcome')
+            }).catch((error) => {
+                if (error.response) {
+                    showToast("Error", error.response.data.detail, "error")
+                }
+            });
+        }
     };
 
     return (
