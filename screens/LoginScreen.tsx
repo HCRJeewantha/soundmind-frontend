@@ -28,6 +28,10 @@ export function LoginScreen({ navigation }: any) {
             showToast("Error", "Mobile Number is required", "error")
             formIsValid = false;
         }
+        if (!/^\d+$/.test(mobile)) {
+            showToast("Error", "Mobile number only contains numbers ", "error")
+            formIsValid = false;
+        }
         if (mobile.length > 11) {
             showToast("Error", "Mobile Number shoud less than 10", "error")
             formIsValid = false;

@@ -32,11 +32,14 @@ export function RegistrationScreen({ navigation }: any) {
             showToast("Error", "Mobile number shoud less than 10", "error")
             formIsValid = false;
         }
-        if (/^\d+$/.test(mobile)) {
+        if (!/^\d+$/.test(mobile)) {
             showToast("Error", "Mobile number only contains numbers ", "error")
             formIsValid = false;
         }
-
+        if (!userName) {
+            showToast("Error", "User name required", "error")
+            formIsValid = false;
+        }
         if (!password) {
             showToast("Error", "Password required", "error")
             formIsValid = false;
